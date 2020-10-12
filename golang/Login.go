@@ -4,9 +4,6 @@ package main
 
 import "fmt"
 
-
-
-
 func main() {
 
      usuarioVerificado := "Paco"
@@ -21,8 +18,9 @@ func main() {
     fmt.Scanln(&contraseña)
 
     if usuario == usuarioVerificado && password == contraseña {
-    	fmt.Println("El usuario es correcto, accediendo ...")
+	fmt.Println("El usuario es correcto, accediendo ...")
     } else{
-    	fmt.Println("Usuario no valido, vuelva a intentarlo")
+	fmt.Println("Usuario no valido, vuelva a intentarlo")
     }
+
 }
