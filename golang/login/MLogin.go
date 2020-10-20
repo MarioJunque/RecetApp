@@ -1,5 +1,4 @@
-package main
-
+package login
 import (
 		"fmt"
 		"database/sql"
@@ -8,7 +7,7 @@ import (
 var db *sql.DB
 var err error
 
-func main() {
+func Login() {
 		var usuario string
 		var contrasenna string
 
