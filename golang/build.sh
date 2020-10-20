@@ -1,4 +1,6 @@
 clear
+echo "Comprobando los test"
+go test
 echo "Compilando aplicación..."
 echo "Generando ejectuable para Windows OS..."
 GOOS=windows GOARCH=amd64 go build -o recetApp.exe
