@@ -1,4 +1,4 @@
-package login
+package usuario
 import (
 		"fmt"
 		"database/sql"

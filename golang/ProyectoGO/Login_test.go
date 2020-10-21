@@ -2,12 +2,12 @@ package main
 
 import (
 	"testing"
-	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/login"
+	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
 )
 
 func TestElUsuarioAccede(t *testing.T) {
     expected := "El usuario es correcto, accediendo ..."
-    got := login.IngresarCredenciales("Paco", "caca123")
+    got := usuario.IngresarCredenciales("Paco", "caca123")
 
     if expected != got {
         t.Errorf("got '%s' expected '%s'", got, expected)
@@ -16,7 +16,7 @@ func TestElUsuarioAccede(t *testing.T) {
 
 func TestElUsuarioNOAccede(t *testing.T) {
     expected := "Usuario no valido, vuelva a intentarlo"
-    got := login.IngresarCredenciales("Pepe", "1234")
+    got := usuario.IngresarCredenciales("Pepe", "1234")
 
     if expected != got {
         t.Errorf("got '%s' expected '%s'", got, expected)
