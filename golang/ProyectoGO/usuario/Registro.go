@@ -3,7 +3,7 @@ import (
 		"fmt"
 )
 
-func registro() {
+func Registro() {
 		var usuario string
 		var contrasenna string
 		var email string
