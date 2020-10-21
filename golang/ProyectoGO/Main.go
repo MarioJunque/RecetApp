@@ -8,17 +8,19 @@ import (
 func main() {
 
 		var opcion int
+		for{
+			fmt.Println("Ecriba\n 1 para registrarse como usuario\n 2 para hacer login")
+			fmt.Scanln(&opcion)
 
-		fmt.Println("Ecriba\n 1 para registrarse como usuario\n 2 para hacer login")
-		fmt.Scanln(&opcion)
+			if opcion == 1 {
 
-		if opcion == 1 {
+				usuario.Registro()
 
-			usuario.Registro()
+			} else if opcion == 2 {
 
-		} else if opcion == 2 {
-
-			usuario.Login()	
+				usuario.Login()	
+			} else {
+				break
+			}
 		}
-
 }
