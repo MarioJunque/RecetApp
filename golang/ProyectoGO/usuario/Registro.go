@@ -20,5 +20,17 @@ func registro() {
 }
 
 func RegistrarUsuario(mail string, user string, pass string) string {
-	return "Sus datos se han registrado con éxito"
+
+		mailVerificado := "x@x.com"
+	    usuarioVerificado := "Paco"
+		passwordVerificada := "caca123"
+
+		RegistroOK := "Sus datos se han registrado con éxito"
+		RegistroNOK := "Vaya, parece que hubo un problema. Vuelva a intentarlo"
+
+		if mail == mailVerificado && user == usuarioVerificado && pass == passwordVerificada {
+				return RegistroOK
+    } else {
+				return RegistroNOK
+    }
 }
