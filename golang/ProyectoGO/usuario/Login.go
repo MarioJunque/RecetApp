@@ -33,7 +33,7 @@ func obtenerBaseDeDatos() (db *sql.DB, e error) {
 }
 
 func IngresarCredenciales(user string, password string) string {
-    usuarioVerificado := "Paco"
+        usuarioVerificado := "Paco"
 		passwordVerificada := "caca123"
 
 		usuarioConfirmado := "El usuario es correcto, accediendo ..."

@@ -3,7 +3,7 @@ import (
 		"fmt"
 )
 
-func Registro() {
+func Registro() string {
 		var usuario string
 		var contrasenna string
 		var email string
@@ -17,6 +17,7 @@ func Registro() {
 
 		resultado := RegistrarUsuario(email, usuario, contrasenna)
 		fmt.Println(resultado)
+		return resultado
 }
 
 func RegistrarUsuario(mail string, user string, pass string) string {
