@@ -7,7 +7,7 @@ import (
 var db *sql.DB
 var err error
 
-func Login() {
+func Login() string {
 		var usuario string
 		var contrasenna string
 
@@ -18,6 +18,7 @@ func Login() {
 
 		resultado := IngresarCredenciales(usuario, contrasenna)
 		fmt.Println(resultado)
+		return resultado
 }
 
 func obtenerBaseDeDatos() (db *sql.DB, e error) {

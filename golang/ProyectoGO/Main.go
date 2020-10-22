@@ -14,15 +14,19 @@ func main() {
 
 			if opcion == 1 {
 
-				resultado := usuario.Registro()
-
-				if resultado == "RegistroOK" {
-
-				}
+				usuario.Registro()
 
 			} else if opcion == 2 {
 
-				usuario.Login()	
+				resultado := usuario.Login()	
+
+					if resultado == "El usuario es correcto, accediendo ..." {
+
+					var opcion2 int
+					fmt.Println("Ecriba\n 1 para añadir los ingredientes que tiene a su disposión\n 2 para generar una receta\n 3 para cerrar sesión")
+					fmt.Scanln(&opcion2)	
+				}
+
 			} else if opcion == 3{
 				
 				break
