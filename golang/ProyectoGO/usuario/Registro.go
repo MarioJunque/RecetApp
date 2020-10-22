@@ -81,13 +81,13 @@ func RegistrarUsuario(user Usuario) string {
 
 func insert(db *sql.DB, user Usuario) (string, error) {
 
-	stmt, err := db.Prepare("INSERT INTO usuario VALUES(?,?,?)")
+	stmt, err := db.Prepare("INSERT INTO usuarios (nombre, contraseña, email) VALUES(?,?,?)")
 	if err != nil {
 		return "NOK", err
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(user.nombre, user.correo, user.password)
+	_, err = stmt.Exec(user.nombre, user.password, user.correo)
 	if err != nil {
 		return "NOK", err
 	}

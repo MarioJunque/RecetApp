@@ -38,7 +38,7 @@ func Login() string {
 func autenticar(db *sql.DB, nombre string) (string, error){
 
 	var pass string
-	stmt, err := db.Prepare("SELECT contraseña FROM usuario WHERE nombre = ?")
+	stmt, err := db.Prepare("SELECT contraseña FROM usuarios WHERE nombre = ?")
 	if err != nil {
 		return "NOK", err
 	}
