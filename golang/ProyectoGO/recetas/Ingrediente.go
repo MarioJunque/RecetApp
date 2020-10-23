@@ -4,18 +4,18 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
-	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
+//	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
 )
 
 var db *sql.DB
 var err error
 
-type Ingediente struct {
+type Ingrediente struct {
 	id_ingrediente int
 	nombre string
 }
 
-func buscarIngrediente(user Usuario) {
+func BuscarIngrediente(id_usuario int) {
 
 	var ing Ingrediente
 
@@ -29,17 +29,18 @@ func buscarIngrediente(user Usuario) {
 	}
 	defer db.Close()
 
-	ing.id_ingrediente, err := comprobarIngredienteBBDD(db, nombreIngrediente)
+	ing.id_ingrediente, err = comprobarIngredienteBBDD(db, nombreIngrediente)
 
-	if ing.id_ingrediente != nil {
+	if ing.id_ingrediente != -1 {
 
-	id, err := insert(db, ing, user)
+	id, err := insert(db, ing, id_usuario)
+	id_int := int(id)
 
-		if id != nil {
+		if id_int != -1 {
 
 			fmt.Println("Se ha añadido correctamente su ingrediente")
 		} else {
-
+			log.Fatal(err)
 			fmt.Println("Ocurrió un error al añadir el ingredite a su inventario")
 		}
 	} else {
@@ -55,13 +56,13 @@ func comprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 
 	stmt, err := db.Prepare("SELECT id_ingrediente FROM ingredientes WHERE nombre = ?")
 	if err != nil {
-		return "NOK", err
+		return -1, err
 	}
 	defer stmt.Close()
 
 	rows, err := stmt.Query(nombreIngrediente)
 	if err != nil {
-		return "NOK", err
+		return -1, err
 	}
 	defer rows.Close()
 	for rows.Next() {
@@ -78,17 +79,17 @@ func comprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 	return id, err
 }
 
-func insert(db *sql.DB, ingrediente Ingrediente, user Usuario) (int, error) {
+func insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) {
 
 	stmt, err := db.Prepare("INSERT INTO ingrediente_usuario (id_ingrediente, id_usuario) VALUES(?,?)")
 	if err != nil {
-		return "NOK", err
+		return -1, err
 	}
 	defer stmt.Close()
 
-	res, err = stmt.Exec(ingrediente.id_ingrediente, user.id_usuario)
+	res, err := stmt.Exec(ingrediente.id_ingrediente, id_usuario)
 	if err != nil {
-		return "NOK", err
+		return -1, err
 	}
 
 	return res.LastInsertId()
