@@ -1,14 +1,9 @@
 INSTRUCCIONES PARA VOLCAR UN DUMP.SQL EN MACOS
 
-
-PARA ACCEDER AL DIRECTORIO DONDE ESTÁ MYSQL:
-
-cd /usr/local/mysql-5.7.28-macos10.14-x86_64/bin/
-
 PARA VOLCAR LA BBDD LOCAL EN UN DUMP.SQL
 
-./mysqldump -u root -p RecetApp > /Users/enrique/GitHubProjects/RecetApp/BBDD/dump.sql
+mariadb-dump -u root -p recetApp > /Users/enrique/GitHubProjects/RecetApp/BBDD/dump_v02.sql
 
 PARA VOLCAR UN DUMP.SQL EN LA BBDD LOCAL
 
-./mysql -u root -p recetapp < /Users/enrique/GitHubProjects/RecetApp/BBDD/dump.sql
+mariadb-dump -u root -p recetapp < /Users/enrique/GitHubProjects/RecetApp/BBDD/dump_v02.sql
