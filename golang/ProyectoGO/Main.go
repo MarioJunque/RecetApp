@@ -25,7 +25,7 @@ func main() {
 					if resultado == "El usuario es correcto, accediendo ..." {
 
 					var opcion2 int
-					fmt.Println("Ecriba\n 1 para añadir los ingredientes que tiene a su disposión\n 2 para generar una receta\n 3 para cerrar sesión")
+					fmt.Println("Ecriba\n 1 para añadir un ingrediente a su inventario\n 2 para generar una receta\n 3 para cerrar sesión")
 					fmt.Scanln(&opcion2)
 
 					if opcion2 == 1 {

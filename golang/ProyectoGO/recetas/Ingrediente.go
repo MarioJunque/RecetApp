@@ -52,31 +52,19 @@ func BuscarIngrediente(id_usuario int) {
 
 func comprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error){
 
-	var id int
-
-	stmt, err := db.Prepare("SELECT id_ingrediente FROM ingredientes WHERE nombre = ?")
-	if err != nil {
-		return -1, err
+	var ingrediente Ingrediente
+	stmt := "SELECT id_ingrediente FROM ingredientes WHERE nombre = ?"
+	row := db.QueryRow(stmt, nombreIngrediente)
+	err := row.Scan(&ingrediente.id_ingrediente)
+	switch err {
+	case sql.ErrNoRows:
+//  	fmt.Println("No está disponible este ingrediente en la base de datos")
+  	return -1, err
+	case nil:
+  	return ingrediente.id_ingrediente, err
+	default:
+  		panic(err)
 	}
-	defer stmt.Close()
-
-	rows, err := stmt.Query(nombreIngrediente)
-	if err != nil {
-		return -1, err
-	}
-	defer rows.Close()
-	for rows.Next() {
-        if err := rows.Scan(&id); err != nil {
-                log.Fatal(err)
-        }
-        fmt.Printf("%s is %d\n", id, nombreIngrediente)
-	}
-	if err := rows.Err(); err != nil {
-        log.Fatal(err)
-}
-
-//	return res.LastInsertId()
-	return id, err
 }
 
 func insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) {
