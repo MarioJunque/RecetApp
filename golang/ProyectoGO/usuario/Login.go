@@ -1,26 +1,18 @@
 package usuario
 import (
-		"fmt"
-				"database/sql"
+	"fmt"
+	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
+
 )
 
 var db *sql.DB
 var err error
 
-//type Usuario struct {
-//correo   string
-//nombre   string
-//password string
-//}
-//var u Usuario
-
-
-func Login() string {
+func Login() (int, string) {
 		var usuario string
 		var contrasenna string
-
 
 		fmt.Println("Introduce el nombre de usuario:")
 		fmt.Scanln(&usuario)
@@ -29,49 +21,33 @@ func Login() string {
 		fmt.Scanln(&contrasenna)
 		u.password = contrasenna
 
-		resultado := IngresarCredenciales(u)
+		id_usuario,resultado := IngresarCredenciales(u)
 		fmt.Println(resultado)
-		return resultado
+		return id_usuario, resultado
 }
 
 
-func autenticar(db *sql.DB, nombre string) (string, error){
+func autenticar(db *sql.DB, nombre string) (int, string, error){
 
-	var pass string
-	stmt, err := db.Prepare("SELECT contraseña FROM usuarios WHERE nombre = ?")
-	if err != nil {
-		return "NOK", err
+	var user Usuario
+	stmt := "SELECT * FROM usuarios WHERE nombre = ?"
+	row := db.QueryRow(stmt, nombre)
+	err := row.Scan(&user.id_usuario, &user.nombre, &user.password, &user.correo)
+	switch err {
+	case sql.ErrNoRows:
+  	fmt.Println("Ningún resultado de la base de datos")
+  	return -1, "NOK", err
+	case nil:
+  	return user.id_usuario, user.password, err
+	default:
+  		panic(err)
 	}
-	defer stmt.Close()
-
-	rows, err := stmt.Query(nombre)
-	if err != nil {
-		return "NOK", err
-	}
-	defer rows.Close()
-	for rows.Next() {
-        if err := rows.Scan(&pass); err != nil {
-                log.Fatal(err)
-        }
-        fmt.Printf("%s is %d\n", pass, nombre)
-	}
-	if err := rows.Err(); err != nil {
-        log.Fatal(err)
 }
 
-//	return res.LastInsertId()
-	return pass, err
-}
-
-//func IngresarCredenciales(user string, password string) string {
-//        usuarioVerificado := "Paco"
-//		passwordVerificada := "caca123"
-
-
-	func IngresarCredenciales(user Usuario) string {
+	func IngresarCredenciales(user Usuario) (int, string) {
 
 		usuarioConfirmado := "El usuario es correcto, accediendo ..."
-		usuarioIncorrecto := "Usuario no valido, vuelva a intentarlo"
+		usuarioIncorrecto := "Usuario no valido, vuelva a intentarlo"	
 
 	db, err := sql.Open("mysql", "root:root@/recetapp")
 	if err != nil {
@@ -79,7 +55,7 @@ func autenticar(db *sql.DB, nombre string) (string, error){
 	}
 	defer db.Close()
 
-	passwordBBDD, err := autenticar(db, user.nombre)
+	id_usuario, passwordBBDD, err := autenticar(db, user.nombre)
 	if err != nil {
 		log.Fatal("Failed to insert into database", err)
 	}
@@ -88,8 +64,8 @@ func autenticar(db *sql.DB, nombre string) (string, error){
 
 
 		if  user.password == passwordBBDD {
-				return usuarioConfirmado
+				return id_usuario, usuarioConfirmado
     } else {
-				return usuarioIncorrecto
+				return -1, usuarioIncorrecto
     }
 }

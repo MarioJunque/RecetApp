@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
+	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/recetas"
 )
 
 
@@ -19,13 +20,18 @@ func main() {
 
 			} else if opcion == 2 {
 
-				resultado := usuario.Login()	
+				id_usuario, resultado := usuario.Login()	
 
 					if resultado == "El usuario es correcto, accediendo ..." {
 
 					var opcion2 int
 					fmt.Println("Ecriba\n 1 para añadir los ingredientes que tiene a su disposión\n 2 para generar una receta\n 3 para cerrar sesión")
-					fmt.Scanln(&opcion2)	
+					fmt.Scanln(&opcion2)
+
+					if opcion2 == 1 {
+
+						recetas.BuscarIngrediente(id_usuario)
+					}	
 				}
 
 			} else if opcion == 3{
