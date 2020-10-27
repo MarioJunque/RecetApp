@@ -29,11 +29,11 @@ func BuscarIngrediente(id_usuario int) {
 	}
 	defer db.Close()
 
-	ing.id_ingrediente, err = comprobarIngredienteBBDD(db, nombreIngrediente)
+	ing.id_ingrediente, err = ComprobarIngredienteBBDD(db, nombreIngrediente)
 
 	if ing.id_ingrediente != -1 {
 
-	id, err := insert(db, ing, id_usuario)
+	id, err := Insert(db, ing, id_usuario)
 	id_int := int(id)
 
 		if id_int != -1 {
@@ -50,7 +50,7 @@ func BuscarIngrediente(id_usuario int) {
 
 }
 
-func comprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error){
+func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error){
 
 	var ingrediente Ingrediente
 	stmt := "SELECT id_ingrediente FROM ingredientes WHERE nombre = ?"
@@ -67,7 +67,7 @@ func comprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 	}
 }
 
-func insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) {
+func Insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) {
 
 	stmt, err := db.Prepare("INSERT INTO ingrediente_usuario (id_ingrediente, id_usuario) VALUES(?,?)")
 	if err != nil {
