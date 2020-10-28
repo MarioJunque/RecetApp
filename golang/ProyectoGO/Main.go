@@ -23,16 +23,21 @@ func main() {
 				id_usuario, resultado := usuario.Login()	
 
 					if resultado == "El usuario es correcto, accediendo ..." {
+					for{
+						var opcion2 int
+						fmt.Println("Ecriba\n 1 para añadir un ingrediente a su inventario\n 2 para generar una receta\n 3 para cerrar sesión")
+						fmt.Scanln(&opcion2)
 
-					var opcion2 int
-					fmt.Println("Ecriba\n 1 para añadir un ingrediente a su inventario\n 2 para generar una receta\n 3 para cerrar sesión")
-					fmt.Scanln(&opcion2)
+						if opcion2 == 1 {
 
-					if opcion2 == 1 {
-
-						recetas.BuscarIngrediente(id_usuario)
-					}	
+							recetas.BuscarIngrediente(id_usuario)
+						}	
+						if opcion2 == 3{
+							break;
+						}
 				}
+					}
+					
 
 			} else if opcion == 3{
 				
