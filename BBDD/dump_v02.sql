@@ -95,7 +95,8 @@ CREATE TABLE `ingredientes` (
 
 LOCK TABLES `ingredientes` WRITE;
 /*!40000 ALTER TABLE `ingredientes` DISABLE KEYS */;
-INSERT INTO `ingredientes` VALUES (1,'tomate'),(2,'cebolla'),(3,'zanahoria');
+INSERT INTO `ingredientes` VALUES  (1,'guisantes'),(2,'salchichón'),(3,'atún'),(4,'orégano'),(5,'setas'),(6,'remolacha'),(7,'sandía'),(8,'salmón'),(9,'cebolleta'),(10,'langosta'),(11,'coliflor'),(12,'berenjena'),(13,'algas'),(14,'sal'),(15,'caviar'),(16,'melón'),(17,'coliflor'),(18,'jamón serrano'),(19,'calabaza'),(20,'anchoa'),(21,'chocolate'),(22,'lima'),(23,'brócoli'),(24,'gamba'),(25,'bacon'),(26,'mejillón'),(27,'plátano'),(28,'morcilla'),(29,'rodaballo'),(30,'lechuga'),(31,'nata'),(32,'ciervo'),(33,'camarón'),(34,'colorante'),(35,'melón'),(36,'perejil'),(37,'soja'),(38,'habas'),(39,'boniato'),(40,'chistorra'),(41,'mango'),(42,'cilantro'),(43,'calabacín'),(44,'lechuga'),(45,'vainilla'),(46,'frambuesa'),(47,'chile'),(48,'sésamo'),(49,'coles'),(50,'yuca'),(51,'membrillo'),(52,'ñame'),(53,'nachos'),(54,'granada'),(55,'avena'),(56,'boquerón'),(57,'pepinillo'),(58,'quinoa'),(59,'higo'),(60,'avellana'),(61,'puerro'),(62,'clavo'),(63,'lubina'),(64,'huevo'),(65,'pimiento'),
+(66,'spaghetti'),(67,'fideos'),(68,'curry'),(69,'hinojo'),(70,'mafafa'),(71,'coco'),(72,'pollo'),(73,'uva'),(74,'colirrabano'),(75,'espárrago'),(76,'cardo'),(77,'mora'),(78,'endivia'),(79,'fideua'),(80,'macarrón'),(81,'whisky'),(82,'conejo'),(83,'galleta'),(84,'alcachofa'),(85,'mantequilla'),(86,'cardamomo'),(87,'rábano'),(88,'pomelo'),(89,'ketchup'),(90,'bogavante'),(91,'cúrcuma'),(92,'tomillo'),(93,'pepino'),(94,'cigala'),(95,'borraja'),(96,'cayena'),(97,'palta'),(98,'melocotón'),(99,'acelga'),(100,'nabo'),(101,'tomate'),(102,'cebolla'),(103,'zanahoria');
 /*!40000 ALTER TABLE `ingredientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
