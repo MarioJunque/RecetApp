@@ -110,7 +110,9 @@ DROP TABLE IF EXISTS `recetas`;
 CREATE TABLE `recetas` (
   `id_receta` int(11) NOT NULL AUTO_INCREMENT,
   `numeroComensales` int(11) DEFAULT NULL,
-  `instrucciones` varchar(200) NOT NULL,
+  `instrucciones` varchar(800) NOT NULL,
+  `nombre` varchar(200) NOT NULL,
+   
   PRIMARY KEY (`id_receta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
