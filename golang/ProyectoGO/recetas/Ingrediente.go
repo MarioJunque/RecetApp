@@ -1,10 +1,12 @@
 package recetas
+
 import (
-	"fmt"
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
+	"fmt"
 	"log"
-//	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
+
+	_ "github.com/go-sql-driver/mysql"
+	//	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
 )
 
 var db *sql.DB
@@ -12,7 +14,7 @@ var err error
 
 type Ingrediente struct {
 	id_ingrediente int
-	nombre string
+	nombre         string
 }
 
 func BuscarIngrediente(id_usuario int) {
@@ -33,8 +35,8 @@ func BuscarIngrediente(id_usuario int) {
 
 	if ing.id_ingrediente != -1 {
 
-	id, err := Insert(db, ing, id_usuario)
-	id_int := int(id)
+		id, err := Insert(db, ing, id_usuario)
+		id_int := int(id)
 
 		if id_int != -1 {
 
@@ -50,7 +52,7 @@ func BuscarIngrediente(id_usuario int) {
 
 }
 
-func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error){
+func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error) {
 
 	var ingrediente Ingrediente
 	stmt := "SELECT id_ingrediente FROM ingredientes WHERE nombre = ?"
@@ -58,18 +60,18 @@ func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 	err := row.Scan(&ingrediente.id_ingrediente)
 	switch err {
 	case sql.ErrNoRows:
-//  	fmt.Println("No está disponible este ingrediente en la base de datos")
-  	return -1, err
+		//  	fmt.Println("No está disponible este ingrediente en la base de datos")
+		return -1, err
 	case nil:
-  	return ingrediente.id_ingrediente, err
+		return ingrediente.id_ingrediente, err
 	default:
-  		panic(err)
+		panic(err)
 	}
 }
 
 func Insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) {
 
-	stmt, err := db.Prepare("INSERT INTO ingrediente_usuario (id_ingrediente, id_usuario) VALUES(?,?)")
+	stmt, err := db.Prepare("INSERT INTO ingrediente_usuario (id_ingredientes, id_usuarios) VALUES(?,?)")
 	if err != nil {
 		return -1, err
 	}
