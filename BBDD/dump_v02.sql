@@ -136,7 +136,10 @@ CREATE TABLE `usuarios` (
   `nombre` varchar(50) DEFAULT NULL,
   `contraseña` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_usuario`)
+	`gluten` tinyint(1) DEFAULT 0,
+	`lactosa` tinyint(1) DEFAULT 0,
+	`histamina` tinyint(1) DEFAULT 0,
+	PRIMARY KEY (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
