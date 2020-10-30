@@ -92,8 +92,7 @@ func RegistrarUsuario(user Usuario) string {
 }
 
 func insert(db *sql.DB, user Usuario) (string, error) {
-	insercion := fmt.Sprintf("INSERT INTO usuarios (nombre, contraseña, email, gluten, lactosa, histamina) VALUES(%s,%s,%s,%d,%d,%d);", user.nombre, user.password, user.correo, user.gluten, user.lactosa, user.histamina)
-	stmt, err := db.Prepare(insercion)
+	stmt, err := db.Prepare("INSERT INTO usuarios (nombre, contraseña, email, gluten, lactosa, histamina) VALUES(?,?,?,?,?,?);")
 	if err != nil {
 		return "NOK", err
 	}
