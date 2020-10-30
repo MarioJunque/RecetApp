@@ -7,3 +7,4 @@ mariadb-dump -u root -p recetApp > /Users/enrique/GitHubProjects/RecetApp/BBDD/d
 PARA VOLCAR UN DUMP.SQL EN LA BBDD LOCAL
 
 mariadb-dump -u root -p recetapp < /Users/enrique/GitHubProjects/RecetApp/BBDD/dump_v02.sql
+
