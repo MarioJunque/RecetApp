@@ -37,18 +37,18 @@ func Registro() {
 	u.password = contrasenna
 	fmt.Println("¿Eres intolerante al gluten? [s|n]")
 	fmt.Scanln(&int_gluten)
-	if int_gluten == 's' {
+	if int_gluten == "s" {
         u.gluten = 1
-    } else if int_gluten == 'n' {
+    } else if int_gluten == "n" {
         u.gluten = 0
     } else {
     	fmt.Println("Error. La respuesta dada es incorrecta")
     }
     fmt.Println("¿Eres intolerante a la lactosa? [s|n]")
 	fmt.Scanln(&int_lactosa)
-	if int_lactosa == 's' {
+	if int_lactosa == "s" {
         u.lactosa = 1
-    } else if int_lactosa == 'n' {
+    } else if int_lactosa == "n" {
         u.lactosa = 0
     } else {
     	fmt.Println("Error. La respuesta dada es incorrecta")
