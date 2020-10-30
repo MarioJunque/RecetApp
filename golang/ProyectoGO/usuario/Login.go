@@ -30,7 +30,7 @@ func Login() (int, string) {
 func autenticar(db *sql.DB, nombre string) (int, string, error){
 
 	var user Usuario
-	stmt := "SELECT * FROM usuarios WHERE nombre = ?"
+	stmt := "SELECT id_usuario, nombre, contraseña, email FROM usuarios WHERE nombre = ?"
 	row := db.QueryRow(stmt, nombre)
 	err := row.Scan(&user.id_usuario, &user.nombre, &user.password, &user.correo)
 	switch err {
