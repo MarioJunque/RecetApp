@@ -55,9 +55,9 @@ func Registro() {
     }
     fmt.Println("¿Eres intolerante a la histamina? [s|n]")
 	fmt.Scanln(&int_histamina)
-	if int_histamina == 's' {
+	if int_histamina == "s" {
         u.histamina = 1
-    } else if int_histamina == 'n' {
+    } else if int_histamina == "n" {
         u.histamina = 0
     } else {
     	fmt.Println("Error. La respuesta dada es incorrecta")
