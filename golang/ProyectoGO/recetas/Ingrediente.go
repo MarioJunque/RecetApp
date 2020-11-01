@@ -6,7 +6,7 @@ import (
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
+//	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
 )
 
 var db *sql.DB
@@ -17,6 +17,7 @@ type Ingrediente struct {
 	nombre         string
 }
 
+	var u Usuario
 
 func BuscarIngrediente(id_usuario int) {
 
@@ -110,17 +111,16 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
 //	default:
 //		panic(err)
 //	}
-	var u Usuario
 	var ingrediente Ingrediente
-    var ingredientes[]Ingrediente
-    rows, err := db.Query("select id_usuarios, id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios=?;")
+    var ingredientes []Ingrediente
+    rows, err := db.Query("select id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios=?;")
     if err != nil {
         log.Fatal(err)
     }
     defer rows.Close()
 
     for rows.Next() {
-        err := rows.Scan(&u.id_usuario,&ingrediente.id_ingrediente,&ingrediente.nombre)
+        err := rows.Scan(&ingrediente.id_ingrediente,&ingrediente.nombre)
         if err != nil {
             log.Fatal(err)
         }
