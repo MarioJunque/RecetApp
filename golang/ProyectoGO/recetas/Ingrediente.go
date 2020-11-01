@@ -6,7 +6,7 @@ import (
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
-	//	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
+	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
 )
 
 var db *sql.DB
@@ -16,6 +16,7 @@ type Ingrediente struct {
 	id_ingrediente int
 	nombre         string
 }
+
 
 func BuscarIngrediente(id_usuario int) {
 
@@ -87,6 +88,10 @@ func Insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) 
 
 func MostrarMisIngredientes(id_usuario int) {
 
+	ingredientes, err := ObtenerMisIngredientes(db, id_usuario)
+	fmt.Println("%v\n",ingredientes)
+	fmt.Printf("%d\n",ingredientes.id_ingrediente)
+    fmt.Printf("%s\n",ingredientes.nombre)
 
 
 }
@@ -105,6 +110,9 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
 //	default:
 //		panic(err)
 //	}
+	var u Usuario
+	var ingrediente Ingrediente
+    var ingredientes[]Ingrediente
     rows, err := db.Query("select id_usuarios, id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios=?;")
     if err != nil {
         log.Fatal(err)
@@ -117,10 +125,12 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
             log.Fatal(err)
         }
 
-        ingredientes = append(ingredientes, User{id_ingrediente: id_ingredientes, nombre: nombre})
+        ingredientes := append(ingredientes, Ingrediente{id_ingrediente: ingrediente.id_ingrediente, nombre: ingrediente.nombre})
     }
     if err := rows.Err(); err != nil {
         log.Fatal(err)
-    } return ingredientes, err
+    }
+
+    return ingredientes, err
 }
 
