@@ -1,4 +1,5 @@
 clear
+echo "Actualizando la base de datos"
 echo "Comprobando los test"
 go test 
 echo "Compilando aplicación..."
