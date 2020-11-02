@@ -17,8 +17,6 @@ type Ingrediente struct {
 	nombre         string
 }
 
-	var u Usuario
-
 func BuscarIngrediente(id_usuario int) {
 
 	var ing Ingrediente
@@ -89,13 +87,18 @@ func Insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) 
 
 func MostrarMisIngredientes(id_usuario int) {
 
+	var ingrediente Ingrediente
 	ingredientes, err := ObtenerMisIngredientes(db, id_usuario)
-	fmt.Println("%v\n",ingredientes)
-	fmt.Printf("%d\n",ingredientes.id_ingrediente)
-    fmt.Printf("%s\n",ingredientes.nombre)
 
-
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Println("%v\n",ingredientes)
+		fmt.Printf("%d\n",ingrediente.id_ingrediente)
+    	fmt.Printf("%s\n",ingrediente.nombre)
+	}
 }
+
 func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
 
 //	var ingrediente Ingrediente
@@ -125,7 +128,9 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
             log.Fatal(err)
         }
 
-        ingredientes := append(ingredientes, Ingrediente{id_ingrediente: ingrediente.id_ingrediente, nombre: ingrediente.nombre})
+//    ingredientes = append(ingredientes, Ingrediente{id_ingrediente: ingrediente.id_ingrediente, nombre: ingrediente.nombre})
+	ingredientes = append(ingredientes, ingrediente)
+
     }
     if err := rows.Err(); err != nil {
         log.Fatal(err)
