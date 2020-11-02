@@ -1,9 +1,0 @@
-Para crear un ejecutable .jar:
-
-javac Main.java
-echo "Main-Class: Main" > MainClass.txt
-jar cmfv MainClass.txt Main.jar *.class
-
-Para ejecutar el fichero .jar:
-
-java -jar Main.jar
