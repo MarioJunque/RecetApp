@@ -2,7 +2,7 @@ package main
 
 import (
 	"testing"
-	"github.com/MarioJunque/RecetApp/tree/master/golang/usuario"
+	"github.com/MarioJunque/RecetApp/tree/master/golang/internal/usuario"
 )
 
 func TestElUsuarioAccede(t *testing.T) {
