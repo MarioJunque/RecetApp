@@ -94,30 +94,22 @@ func MostrarMisIngredientes(id_usuario int) {
 		log.Fatal(err)
 	} else {
 		fmt.Println("%v\n",ingredientes)
-		fmt.Printf("%d\n",ingrediente.id_ingrediente)
-    	fmt.Printf("%s\n",ingrediente.nombre)
+		fmt.Println("%d\n",ingrediente.id_ingrediente)
+    	fmt.Println("%s\n",ingrediente.nombre)
 	}
 }
 
 func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
 
-//	var ingrediente Ingrediente
-//	stmt := "select id_usuarios, id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios=?;"
-//	row := db.QueryRow(stmt, id_usuario)
-//	err := row.Scan(&u.id_usuario,&ingrediente.id_ingrediente,&ingrediente.nombre)
-//	switch err {
-//	case sql.ErrNoRows:
-		//  	fmt.Println("No está disponible este ingrediente en la base de datos")
-//		return -1,-1, "NOK" err
-//	case nil:
-//		return u.id_usuario, ingrediente.id_ingrediente, ingrediente.nombre, err
-//	default:
-//		panic(err)
-//	}
 	var ingrediente Ingrediente
     var ingredientes []Ingrediente
-    rows, err := db.Query("select id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios=?;")
+    stmt := "select id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios = ?"
+	fmt.Println("ñññ1")
+	rows, err := db.Query(stmt, id_usuario)
+			fmt.Println("ñññ2")
+//    rows, err := db.Query("select id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios=?;", id_usuario)
     if err != nil {
+    	fmt.Println("ñññ3")
         log.Fatal(err)
     }
     defer rows.Close()
