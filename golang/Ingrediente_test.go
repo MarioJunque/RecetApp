@@ -2,7 +2,7 @@ package main
 
 import (
 	"testing"
-	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/recetas"
+	"github.com/MarioJunque/RecetApp/tree/master/golang/recetas"
 	"database/sql"
 )
 

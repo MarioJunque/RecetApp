@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/recetas"
-	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
+	"github.com/MarioJunque/RecetApp/tree/master/golang/recetas"
+	"github.com/MarioJunque/RecetApp/tree/master/golang/usuario"
 )
 
 func main() {

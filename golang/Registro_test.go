@@ -2,7 +2,7 @@ package main
 
 import (
 	"testing"
-	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
+	"github.com/MarioJunque/RecetApp/tree/master/golang/usuario"
 )
 
 func TestGuardaEnBBDD(t *testing.T) {

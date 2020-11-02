@@ -6,7 +6,7 @@ import (
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
-//	"github.com/MarioJunque/RecetApp/tree/master/golang/ProyectoGO/usuario"
+//	"github.com/MarioJunque/RecetApp/tree/master/golang/usuario"
 )
 
 var db *sql.DB
