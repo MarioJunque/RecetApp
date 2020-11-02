@@ -109,7 +109,6 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
 			fmt.Println("ñññ2")
 //    rows, err := db.Query("select id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios=?;", id_usuario)
     if err != nil {
-    	fmt.Println("ñññ3")
         log.Fatal(err)
     }
     defer rows.Close()
