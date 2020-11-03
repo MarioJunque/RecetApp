@@ -44,6 +44,7 @@ CREATE TABLE `ingrediente_receta` (
 
 LOCK TABLES `ingrediente_receta` WRITE;
 /*!40000 ALTER TABLE `ingrediente_receta` DISABLE KEYS */;
+INSERT INTO ingrediente_receta (id_ingrediente_receta, id_ingredientes, id_recetas)VALUES (1, 64,1), (2, 9, 1), (3, 101, 1), (4, 65, 1), (5, 44, 1), (6, 3, 1), (7, 66, 2), (8, 102, 2), (9, 64, 2), (10, 25, 2), (11, 21, 3), (12, 60, 3), (13, 58, 4), (14, 93, 4), (15, 101, 4), (16, 65, 4), (17, 3, 4), (18, 19, 5), (19, 102, 5);
 /*!40000 ALTER TABLE `ingrediente_receta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,6 +124,12 @@ CREATE TABLE `recetas` (
 
 LOCK TABLES `recetas` WRITE;
 /*!40000 ALTER TABLE `recetas` DISABLE KEYS */;
+INSERT INTO recetas (id_receta, numeroComensales, instrucciones, nombre_receta) VALUES (1, 1, 'Primero corta las judías verdes y se ponen a hervir durante 20 minutos. Ademas, se cuecen los huevos. Se parte la cebolleta, puedes dejarla en agua para que su sabor pierda fuerza. Se lava el tomate, pimiento y lechuga y se trocea. Se mezcla todo el un plato. Cuando estén las judías y los huevos cocidos se trocean y se añaden de la misma manera. Se le añade atun', 'Ensalada'),
+ (2, 4, 'Primero se cuecen los espaguetis alrededor de unos 9 minutos. Se corta la cebolla en pedacitos pequeños y se fríen durante unos 10 minutos. En un bol, dos huevos. Se echa la nata en con la cebolla y el huevo, se deja durante un par de minutos. Echamos el bacon troceado. Luego lo mezclamos todo con los espaguetis', 'Espaguetis Carbonara'),
+ (3, 1, 'Primero se derrite el chocolate en un cazo o en el microondas hasta que quede totalmente líquido. Luego se trocea y se rallan las avellanas. Se mezcla todo en un molde o algun recipiente. Se introduce en el congelador durante 2 horas aproximadamente', 'Helado de chocolate y avellanas'),
+ (4, 2, 'Primero se debe enjuagar la quinoa y ponerla a hervir durante 15 minutos hasta que el agua haya desaparecido. Se va cortando el pepino, tomate y los pimientos en trozos pequeños mientras tanto. Cuando la quinoa esté lista, se mezcla todo en un bol añadiéndole atun', 'Ensalada de quinoa y atun'),
+ (5, 1, 'Primero se pela una cebolla y se parte, se le quita la piel a la calabaza y se corta de igual manera. En una olla se introduce la cebolla a fuego suave. Cuando esta comience a dorarse, añadimos agua y se deja cocer durante 20 minutos. Pasado este tiempo, trituramos todo en la batidora y ya estaría lista la crema de calabaza', 'Crema de calabaza');
+
 /*!40000 ALTER TABLE `recetas` ENABLE KEYS */;
 UNLOCK TABLES;
 
