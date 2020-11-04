@@ -30,6 +30,8 @@ func MostrarMisRecetas(id_usuario int) {
 	}
 	defer db.Close()
 
+	//ObtenerMisRecetas()
+
 }
 
 func IngredientesUsuarioReceta(id_usuario int) ([]Receta, error) {
@@ -96,10 +98,11 @@ func ObtenerMisRecetas(id_usuario int) ([]Receta){
 	ingredientesUsuario, err := IngredientesUsuarioReceta(id_usuario)
 	ingredientesReceta, err := NumeroIngredientesReceta()
 
-    for i := 0; i < len(test); i++ {​​​​​
+    for i := 0; i < len(ingredientesReceta); i++ {​​​​​
 
             if ingredientesUsuario[i].id_receta == ingredientesReceta[i].id_receta && ingredientesUsuario[i].numeroIngredientes == ingredientesReceta[i].numeroIngredientes {​​​​​
                 
+                //Select * from recetas where id_receta = ingredientesUsuario[i].id_receta 
                 recetas = append(recetas, ingredientesUsuario[i].id_receta)
             }​​​​​ else {
 
