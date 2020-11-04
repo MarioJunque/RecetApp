@@ -22,7 +22,7 @@ type Receta struct {
 }
 
 
-func MostrarMisRecetas(int id_usuario) {
+func MostrarMisRecetas(id_usuario int) {
 
 	db, err := sql.Open("mysql", "root:root@/recetapp")
 	if err != nil {
@@ -32,7 +32,7 @@ func MostrarMisRecetas(int id_usuario) {
 
 }
 
-func IngredientesUsuarioReceta(int id_usuario) ([]Receta, error) {
+func IngredientesUsuarioReceta(id_usuario int) ([]Receta, error) {
 
 	var receta Receta
 	var ingredientesUsuario []Receta
@@ -89,3 +89,22 @@ func NumeroIngredientesReceta() ([]Receta, error) {
         log.Fatal(err)
     }
 }
+
+func ObtenerMisRecetas(id_usuario int) ([]Receta){
+
+	var recetas []Receta
+	ingredientesUsuario, err := IngredientesUsuarioReceta(id_usuario)
+	ingredientesReceta, err := NumeroIngredientesReceta()
+
+    for i := 0; i < len(test); i++ {​​​​​
+
+            if ingredientesUsuario[i].id_receta == ingredientesReceta[i].id_receta && ingredientesUsuario[i].numeroIngredientes == ingredientesReceta[i].numeroIngredientes {​​​​​
+                
+                recetas = append(recetas, ingredientesUsuario[i].id_receta)
+            }​​​​​ else {
+
+            	fmt.Println("No hay recetas con los ingredientes introducidos")
+            }
+        }​​​​​ return recetas
+
+    }
