@@ -11,7 +11,7 @@ func main() {
 
 	var opcion int
 	for {
-		fmt.Println("Ecriba\n 1 para registrarse como usuario\n 2 para hacer login\n 3 para salir de la aplicación")
+		fmt.Println("Ecriba\n 1 para registrarse como usuario\n 2 para hacer login\n 3 para introducir intolerancias alimenticias\n 4 para salir de la aplicación")
 		fmt.Scanln(&opcion)
 
 		if opcion == 1 {
@@ -35,6 +35,9 @@ func main() {
 					if opcion2 == 2 {
 
 						recetas.MostrarMisIngredientes(id_usuario)
+					}
+					if opcion2 == 3 {
+						usuario.AnnadirIntoleranciasAlimenticias(id_usuario)
 					}
 					if opcion2 == 4 {
 						break

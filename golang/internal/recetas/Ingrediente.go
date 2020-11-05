@@ -39,7 +39,6 @@ func BuscarIngrediente(id_usuario int) {
 		id_int := int(id)
 
 		if id_int != -1 {
-
 			fmt.Println("Se ha añadido correctamente su ingrediente")
 		} else {
 			log.Fatal(err)
