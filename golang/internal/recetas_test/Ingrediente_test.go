@@ -41,3 +41,23 @@ func TestBorroElIngredienteQueQuiero (t *testing.T) {
     }
 
 }
+
+func TestBorroElIngredienteQueQuiero2 (t *testing.T) {
+
+	var ingredientes []recetas.Ingrediente
+
+	ingredientes = append(ingredientes, recetas.Ingrediente{Id_ingrediente: 4, Nombre: "pepino"})
+	ingredientes = append(ingredientes, recetas.Ingrediente{Id_ingrediente: 5, Nombre: "pollo"})
+
+	_, ingredientesBorrado := recetas.BorrarIngrediente(ingredientes, 4)
+
+	ingredientesArray := len(ingredientesBorrado)
+
+	expected := 1
+    got := ingredientesArray
+
+    if expected != got {
+        t.Errorf("got '%v' expected '%v'", got, expected)
+    }
+
+}
