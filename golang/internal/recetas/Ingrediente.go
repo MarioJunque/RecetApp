@@ -136,3 +136,9 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
     return ingredientes, err
 }
 
+func BorrarIngrediente(db *sql.DB, id_usuario int) (string){
+
+return "Su ingrediente se ha eliminado con éxito"
+
+}
+
