@@ -2,15 +2,15 @@ package recetas
 
 import (
 	"database/sql"
-	"fmt"
+//	"fmt"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
 //	"github.com/MarioJunque/RecetApp/tree/master/golang/internal/usuario"
 )
 
-var db *sql.DB
-var err error
+//var db *sql.DB
+//var err error
 
 type Receta struct {
 	id_receta int
@@ -60,7 +60,8 @@ func IngredientesUsuarioReceta(id_usuario int) ([]Receta, error) {
     }
     if err := rows.Err(); err != nil {
         log.Fatal(err)
-    }
+    } 
+    return ingredientesUsuario, err
 
 }
 
@@ -90,24 +91,28 @@ func NumeroIngredientesReceta() ([]Receta, error) {
     if err := rows.Err(); err != nil {
         log.Fatal(err)
     }
+
+    return ingredientesReceta, err
 }
 
 func ObtenerMisRecetas(id_usuario int) ([]Receta){
 
 	var recetas []Receta
-	ingredientesUsuario, err := IngredientesUsuarioReceta(id_usuario)
-	ingredientesReceta, err := NumeroIngredientesReceta()
+//	ingredientesUsuario, err := IngredientesUsuarioReceta(id_usuario)
+//	ingredientesReceta, err := NumeroIngredientesReceta()
 
-    for i := 0; i < len(ingredientesReceta); i++ {​​​​​
+	return recetas
 
-            if ingredientesUsuario[i].id_receta == ingredientesReceta[i].id_receta && ingredientesUsuario[i].numeroIngredientes == ingredientesReceta[i].numeroIngredientes {​​​​​
+    //for i := 0; i < len(ingredientesReceta); i++ {​​​​​
+
+            //if ingredientesUsuario[i].id_receta == ingredientesReceta[i].id_receta && ingredientesUsuario[i].numeroIngredientes == ingredientesReceta[i].numeroIngredientes {​​​​​
                 
                 //Select * from recetas where id_receta = ingredientesUsuario[i].id_receta 
-                recetas = append(recetas, ingredientesUsuario[i].id_receta)
-            }​​​​​ else {
+                //recetas = append(recetas, ingredientesUsuario[i].id_receta)
+            //}​​​​​ else {
 
-            	fmt.Println("No hay recetas con los ingredientes introducidos")
-            }
-        }​​​​​ return recetas
+            //	fmt.Println("No hay recetas con los ingredientes introducidos")
+            //}
+        //}​​​​​ return recetas
 
     }
