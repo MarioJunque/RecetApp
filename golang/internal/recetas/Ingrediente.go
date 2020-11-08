@@ -13,8 +13,8 @@ var db *sql.DB
 var err error
 
 type Ingrediente struct {
-	id_ingrediente int
-	nombre         string
+	Id_ingrediente int
+	Nombre         string
 }
 
 func BuscarIngrediente(id_usuario int) {
@@ -22,8 +22,8 @@ func BuscarIngrediente(id_usuario int) {
 	var ing Ingrediente
 
 	fmt.Println("Introduce el nombre del ingrediente que desee incluir en su inventario:")
-	fmt.Scanln(&ing.nombre)
-	nombreIngrediente := ing.nombre
+	fmt.Scanln(&ing.Nombre)
+	nombreIngrediente := ing.Nombre
 
 	db, err := sql.Open("mysql", "root:root@/recetapp")
 	if err != nil {
@@ -31,9 +31,9 @@ func BuscarIngrediente(id_usuario int) {
 	}
 	defer db.Close()
 
-	ing.id_ingrediente, err = ComprobarIngredienteBBDD(db, nombreIngrediente)
+	ing.Id_ingrediente, err = ComprobarIngredienteBBDD(db, nombreIngrediente)
 
-	if ing.id_ingrediente != -1 {
+	if ing.Id_ingrediente != -1 {
 
 		id, err := Insert(db, ing, id_usuario)
 		id_int := int(id)
@@ -56,13 +56,13 @@ func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 	var ingrediente Ingrediente
 	stmt := "SELECT id_ingrediente FROM ingredientes WHERE nombre = ?"
 	row := db.QueryRow(stmt, nombreIngrediente)
-	err := row.Scan(&ingrediente.id_ingrediente)
+	err := row.Scan(&ingrediente.Id_ingrediente)
 	switch err {
 	case sql.ErrNoRows:
 		//  	fmt.Println("No está disponible este ingrediente en la base de datos")
 		return -1, err
 	case nil:
-		return ingrediente.id_ingrediente, err
+		return ingrediente.Id_ingrediente, err
 	default:
 		panic(err)
 	}
@@ -76,7 +76,7 @@ func Insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) 
 	}
 	defer stmt.Close()
 
-	res, err := stmt.Exec(ingrediente.id_ingrediente, id_usuario)
+	res, err := stmt.Exec(ingrediente.Id_ingrediente, id_usuario)
 	if err != nil {
 		return -1, err
 	}
@@ -120,7 +120,7 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
     defer rows.Close()
 
     for rows.Next() {
-        err := rows.Scan(&ingrediente.id_ingrediente,&ingrediente.nombre)
+        err := rows.Scan(&ingrediente.Id_ingrediente,&ingrediente.Nombre)
         if err != nil {
             log.Fatal(err)
         }
@@ -136,9 +136,11 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
     return ingredientes, err
 }
 
-func BorrarIngrediente(db *sql.DB, id_usuario int) (string){
+func BorrarIngrediente(ingredientes []Ingrediente, id_ingrediente int) (string, []Ingrediente){
 
-return "Su ingrediente se ha eliminado con éxito"
+var ingredienteBorrado []Ingrediente
+
+return "Su ingrediente se ha eliminado con éxito", ingredienteBorrado
 
 }
 

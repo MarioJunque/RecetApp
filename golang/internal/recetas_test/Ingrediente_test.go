@@ -10,11 +10,34 @@ var db *sql.DB
 
 func TestIngredienteBorradoConExito(t *testing.T) {
 
+	var listaIngredientes []recetas.Ingrediente
+
+	resultado,_:= recetas.BorrarIngrediente(listaIngredientes, 4)
+
 	expected := "Su ingrediente se ha eliminado con éxito"
-    got := recetas.BorrarIngrediente(db, 4)
+    got := resultado
 
     if expected != got {
         t.Errorf("got '%s' expected '%s'", got, expected)
     }
 
-	}
+}
+
+func TestBorroElIngredienteQueQuiero (t *testing.T) {
+
+	var ingredientes []recetas.Ingrediente
+
+	ingredientes = append(ingredientes, recetas.Ingrediente{Id_ingrediente: 4, Nombre: "pepino"})
+
+	_, ingredientesBorrado := recetas.BorrarIngrediente(ingredientes, 4)
+
+	ingredientesArray := len(ingredientesBorrado)
+
+	expected := 0
+    got := ingredientesArray
+
+    if expected != got {
+        t.Errorf("got '%v' expected '%v'", got, expected)
+    }
+
+}
