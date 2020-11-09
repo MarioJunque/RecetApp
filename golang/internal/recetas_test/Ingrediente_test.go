@@ -24,6 +24,22 @@ func TestIngredienteBorradoConExito(t *testing.T) {
     }
 }
 
+func TestIngredienteBorradoConExito2(t *testing.T) {
+
+	id_ingrediente := 2
+	nombreIngrediente := "salchichón"
+
+	recetas.BorrarIngrediente(db, id_ingrediente, nombreIngrediente)
+	ingredienteEliminado := recetas.ComprobarIngrediente(db, id_ingrediente, nombreIngrediente )
+
+	expected := 1
+    got := ingredienteEliminado
+
+    if expected != got {
+        t.Errorf("got '%v' expected '%v'", got, expected)
+    }
+}
+
 
 //func TestIngredienteBorradoConExito(t *testing.T) {
 
