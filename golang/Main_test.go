@@ -41,7 +41,14 @@ _, err = db.Exec("CREATE TABLE ingrediente_usuario (id_ingrediente_usuario int(1
 }
  
 func teardown() {
-	// Do something here.
+
+	db, err := sql.Open("mysql", "root:root@/recetapp_tests")
+	if err != nil {
+		log.Fatal("Cannot open DB connection", err)
+	}
+	defer db.Close()
+
+	_, err = db.Exec("DROP TABLE IF EXISTS ingrediente_usuario, ingrediente_receta, ingredientes, recetas, usuarios;")
  
 	fmt.Printf("\033[1;36m%s\033[0m", "> Teardown completed")
 	fmt.Printf("\n")
