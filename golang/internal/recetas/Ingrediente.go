@@ -140,6 +140,7 @@ func BorrarIngrediente(db *sql.DB, id_ingrediente int, nombreIngrediente string)
 
 var listaConIngredienteBorrado []Ingrediente
 
+
 return listaConIngredienteBorrado
 
 }

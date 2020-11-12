@@ -8,9 +8,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
-
-
-var db *sql.DB
  
 func TestMain(m *testing.M) {
 	setup()
