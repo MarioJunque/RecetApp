@@ -1,0 +1,54 @@
+
+::-webkit-input-placeholder { color: white;}
+
+body{
+	margin: 0;
+	padding: 0;
+	background: url(fondoRecetapp.jpg) no-repeat;
+    background-size: cover;
+}
+
+.boxlog{
+	width: 280px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+
+}
+
+.boxlog h1{
+	font-size: 40px;
+	border-bottom: 6px solid  darkseagreen;
+	margin-bottom: 15px;
+	padding: 13px 0;
+    color: white;
+}
+
+.inputbox{
+	width: 100%;
+	overflow: hidden;
+	font-size: 20px;
+	padding: 8px 0;
+	border-bottom: 1px solid darkseagreen;
+}
+
+.inputbox input{
+	border: none;
+	outline: none;
+	background: none;
+	color: white;
+	width: 80%;
+	font-size: 14px;
+	margin: 10px 0;
+}
+
+.submitbutton{
+	width: 100%;
+	background: none;
+    border: 2px solid darkseagreen;
+    color: white;
+    padding: 5px ;
+    text-align: center
+    margin: 10px 0;
+}
