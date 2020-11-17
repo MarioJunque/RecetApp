@@ -1,19 +1,27 @@
 
 ::-webkit-input-placeholder { color: lightgrey;}
 
+
 body{
 	margin: 0;
 	padding: 0;
-	background: url(fondoRecetapp.jpg) no-repeat;
+	background: url(fondoRecetapp.jpg) no-repeat center;
+	min-height: 100vh;
     background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .boxlog{
-	width: 280px;
+	width: calc(25% - 20px);
 	position: absolute;
-	top: 35%;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
+	background-color: darkslategrey;
+	max-width: 500px;
+	padding: 30px 30px;
 
 }
 
