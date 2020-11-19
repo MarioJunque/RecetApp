@@ -136,12 +136,18 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
     return ingredientes, err
 }
 
-func BorrarIngrediente(db *sql.DB, id_ingrediente int, nombreIngrediente string) ([]Ingrediente){
+func BorrarIngrediente(db *sql.DB, id_ingrediente int, id_usuario int) {
 
-var listaConIngredienteBorrado []Ingrediente
+	stmt, err := db.Prepare("DELETE FROM ingrediente_usuario WHERE id_ingrediente=? AND id_usuario=?")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
 
-
-return listaConIngredienteBorrado
+	_, err = stmt.Exec(id_ingrediente, id_usuario)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
 
