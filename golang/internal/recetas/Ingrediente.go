@@ -138,7 +138,7 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
 
 func BorrarIngrediente(db *sql.DB, id_ingrediente int, id_usuario int) {
 
-	stmt, err := db.Prepare("DELETE FROM ingrediente_usuario WHERE id_ingrediente=? AND id_usuario=?")
+	stmt, err := db.Prepare("DELETE FROM ingrediente_usuario WHERE id_ingredientes = ? AND id_usuarios = ?")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -14,7 +14,7 @@ func TestIngredienteBorradoConExito(t *testing.T) {
 	id_ingrediente := 1
 	id_usuario := 1
 
-	db, err := sql.Open("mysql", "root:root@/recetapp")
+	db, err := sql.Open("mysql", "root:root@/recetapp_tests")
 	if err != nil {
 		log.Fatal("Cannot open DB connection", err)
 	}
@@ -26,7 +26,7 @@ func TestIngredienteBorradoConExito(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	stmt2 := "INSERT INTO ingredientes (id_ingrediente, nombre) VALUES(1, 'guisantes);"
+	stmt2 := "INSERT INTO ingredientes (id_ingrediente, nombre) VALUES(1, 'guisantes');"
 	_, err = db.Exec(stmt2)
 	if err != nil {
 		log.Fatal(err)
@@ -40,7 +40,7 @@ func TestIngredienteBorradoConExito(t *testing.T) {
 
 	recetas.BorrarIngrediente(db, id_ingrediente, id_usuario)
 	
-	stmt4 := "SELECT id_ingrediente FROM ingrediente_usuario WHERE id_ingrediente = 1"
+	stmt4 := "SELECT id_ingredientes FROM ingrediente_usuario WHERE id_ingredientes = 1"
 	row := db.QueryRow(stmt4)
 
 	var resultado int
