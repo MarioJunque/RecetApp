@@ -5,3 +5,6 @@ https://www.youtube.com/watch?v=gfQgrnMZLJs
 
 https://golang.org/doc/articles/wiki/
 (Página oficial de Golang para hacer aplicaciones web)
+
+https://gowebexamples.com/templates/
+
