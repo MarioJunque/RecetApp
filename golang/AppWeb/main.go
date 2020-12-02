@@ -11,7 +11,11 @@ type Usuario struct {
 }
 
 func main() {
-    tmpl := template.Must(template.ParseFiles("./publico/index.html"))
+    
+    fs := http.FileServer(http.Dir("assets/"))
+    http.Handle("/publico/", http.StripPrefix("/publico/", fs))
+    tmpl := template.Must(template.ParseFiles("publico/index.html"))
+
 
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         if r.Method != http.MethodPost {
