@@ -1,18 +1,34 @@
-    package main
+package main
 
-    import (
-        "net/http"
+import (
+    "html/template"
+    "net/http"
+)
 
-        "github.com/russross/blackfriday"
-    )
+type Usuario struct {
+    nombre   string
+    password string
+}
 
-    func main () {
-        http.HandleFunc("/markdown", GeneraDesdeMarkdown)
-        http.Handle("/", http.FileServer(http.Dir("publico")))
-        http.ListenAndServe(":8080", nil)
-    }
+func main() {
+    tmpl := template.Must(template.ParseFiles("./publico/index.html"))
 
-    func GeneraDesdeMarkdown(rw http.ResponseWriter, r *http.Request) {
-        html := blackfriday.MarkdownCommon([]byte (r.FormValue("cuerpo")))
-        rw.Write(html)
-    }
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        if r.Method != http.MethodPost {
+            tmpl.Execute(w, nil)
+            return
+        }
+
+        details := Usuario{
+            nombre:   r.FormValue("nombre"),
+            password: r.FormValue("password"),
+        }
+
+        // do something with details
+        _ = details
+
+        tmpl.Execute(w, struct{ Success bool }{true})
+    })
+
+    http.ListenAndServe(":8080", nil)
+}
