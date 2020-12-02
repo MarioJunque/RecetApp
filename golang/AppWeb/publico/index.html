@@ -1,22 +1,25 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 	<meta charset="utf-8">
 	<title>Recetapp Login</title>
-	<link rel="stylesheet" href="css/fondo.css">
+	  <link href="/css/fondo.css" rel="stylesheet">
 </head>
+{{if .Success}}
+<h1>Thanks for your message!</h1>
+{{else}}
 <body>
 	<div class="boxlog">
 		<h1>Login</h1>
-    <div class="inputbox">
-    	<input type="text" placeholder="nombre" name="">
-    </div>
-     <div class="inputbox">
-    	<input type="password" placeholder="password" name="">
-    </div>
-    	<input class="submitbutton" type="button" value="entrar">
-	</div>
-	
-	
+
+    <form method="POST">
+        <label>Nombre:</label><br />
+        <input type="text" name="nombre"><br />
+        <label>Contraseña:</label><br />
+        <input type="text" name="password"><br />
+        <input type="submit">
+    </form>
+{{end}}		
 </body>
 </html>

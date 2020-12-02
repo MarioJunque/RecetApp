@@ -33,7 +33,7 @@ body{
     color: lightgrey;
 }
 
-.inputbox{
+.form{
 	width: 100%;
 	overflow: hidden;
 	font-size: 20px;
@@ -41,7 +41,7 @@ body{
 	border-bottom: 1px solid yellowgreen;
 }
 
-.inputbox input{
+.form input{
 	border: none;
 	outline: none;
 	background: none;
@@ -51,7 +51,7 @@ body{
 	margin: 10px 0;
 }
 
-.submitbutton{
+.submit
 	width: 100%;
 	background: none;
     border: 2px solid yellowgreen;
