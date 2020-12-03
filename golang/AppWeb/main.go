@@ -12,7 +12,7 @@ type Usuario struct {
 
 func main() {
     
-    fs := http.FileServer(http.Dir("assets/"))
+    fs := http.FileServer(http.Dir("publico"))
     http.Handle("/publico/", http.StripPrefix("/publico/", fs))
     tmpl := template.Must(template.ParseFiles("publico/index.html"))
 
