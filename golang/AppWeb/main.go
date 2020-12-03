@@ -17,7 +17,7 @@ func main() {
     tmpl := template.Must(template.ParseFiles("publico/index.html"))
 
 
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
         if r.Method != http.MethodPost {
             tmpl.Execute(w, nil)
             return
