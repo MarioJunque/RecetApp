@@ -3,6 +3,8 @@ package main
 import (
     "html/template"
     "net/http"
+    "fmt"
+    "log"
 )
 
 type Usuario struct {
@@ -10,29 +12,43 @@ type Usuario struct {
     password string
 }
 
-func main() {
-    
+
+func pantallaInicio(w http.ResponseWriter, r *http.Request) {
+
     fs := http.FileServer(http.Dir("publico"))
     http.Handle("/publico/", http.StripPrefix("/publico/", fs))
-    tmpl := template.Must(template.ParseFiles("publico/index.html"))
+    tmpl := template.Must(template.ParseFiles("publico/index.html"))   
+    tmpl.Execute(w, nil)
 
+    r.ParseForm() 
 
-    http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-        if r.Method != http.MethodPost {
-            tmpl.Execute(w, nil)
-            return
-        }
+}    
 
-        details := Usuario{
+func login(w http.ResponseWriter, r *http.Request) {
+
+        fmt.Println("method:", r.Method) //get request method
+    if r.Method == "GET" {
+        t, _ := template.ParseFiles("index.html")
+        t.Execute(w, nil)
+    } else {
+
+        user := Usuario{
             nombre:   r.FormValue("nombre"),
             password: r.FormValue("password"),
         }
+        fmt.Println(user.nombre)
+        fmt.Println(user.password)      
 
-        // do something with details
-        _ = details
+    }
+}
 
-        tmpl.Execute(w, struct{ Success bool }{true})
-    })
+func main() {
+    
+    http.HandleFunc("/", pantallaInicio)
+    http.HandleFunc("/login", login)
 
-    http.ListenAndServe(":8080", nil)
+    err := http.ListenAndServe(":8080", nil) // setting listening port
+    if err != nil {
+        log.Fatal("ListenAndServe: ", err)
+    }
 }
