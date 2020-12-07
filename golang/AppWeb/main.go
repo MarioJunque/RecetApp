@@ -5,12 +5,8 @@ import (
     "net/http"
     "fmt"
     "log"
+    "github.com/MarioJunque/RecetApp/tree/master/golang/AppWeb/funciones"
 )
-
-type Usuario struct {
-    nombre   string
-    password string
-}
 
 
 func pantallaInicio(w http.ResponseWriter, r *http.Request) {
@@ -32,30 +28,29 @@ func login(w http.ResponseWriter, r *http.Request) {
         t.Execute(w, nil)
     } else {
 
-        user := Usuario{
-            nombre:   r.FormValue("nombre"),
-            password: r.FormValue("password"),
+        user := funciones.Usuario {
+            Nombre:   r.FormValue("nombre"),
+            Password: r.FormValue("password"),
         }    
         
-        usuarioValido := ComprobarCredenciales(user)
+        usuarioValido := funciones.ComprobarCredenciales(user)
+        fmt.Println(usuarioValido)
 
         if usuarioValido == true {
 
             redirectTarget := "/internal"
-            http.Redirect(response, request, redirectTarget, 302)
+            http.Redirect(w, r, redirectTarget, 302)
         } else {
             http.HandleFunc("/", pantallaInicio)
         }    
-        }
-        fmt.Println(user.nombre)
-        fmt.Println(user.password)      
+        }    
 
     }
 
 func internal(w http.ResponseWriter, r *http.Request) {
 
-    fs := http.FileServer(http.Dir("publico"))
-    http.Handle("/publico/", http.StripPrefix("/publico/", fs))
+//    fs := http.FileServer(http.Dir("publico"))
+//    http.Handle("/publico/", http.StripPrefix("/publico/", fs))
     tmpl := template.Must(template.ParseFiles("publico/internal.html"))   
     tmpl.Execute(w, nil)
 
@@ -67,6 +62,8 @@ func main() {
     
     http.HandleFunc("/", pantallaInicio)
     http.HandleFunc("/login", login)
+
+    http.HandleFunc("/internal", internal)
 
     err := http.ListenAndServe(":8080", nil) // setting listening port
     if err != nil {

@@ -1,4 +1,5 @@
-package main
+package funciones
+
 import (
 	"fmt"
 	"database/sql"
@@ -7,21 +8,28 @@ import (
 
 )
 
+type Usuario struct {
+    Id_usuario int
+    Nombre   string
+    Password string
+    Correo string
+}
+
 var db *sql.DB
 var err error
 
-func Autenticar(db *sql.DB, nombre string) (int, string, error){
+func Autenticar(db *sql.DB, nombre string) (string, error){
 
 	var user Usuario
 	stmt := "SELECT id_usuario, nombre, contraseña, email FROM usuarios WHERE nombre = ?"
 	row := db.QueryRow(stmt, nombre)
-	err := row.Scan(&user.id_usuario, &user.nombre, &user.password, &user.correo)
+	err := row.Scan(&user.Id_usuario, &user.Nombre, &user.Password, &user.Correo)
 	switch err {
 	case sql.ErrNoRows:
   	fmt.Println("Ningún resultado de la base de datos")
-  	return -1, "NOK", err
+  	return "NOK", err
 	case nil:
-  	return user.id_usuario, user.password, err
+  	return user.Password, err
 	default:
   		panic(err)
 	}
@@ -35,7 +43,7 @@ func ComprobarCredenciales(user Usuario) (bool) {
 	}
 	defer db.Close()
 
-	id_usuario, passwordBBDD, err := autenticar(db, user.nombre)
+	passwordBBDD, err := Autenticar(db, user.Nombre)
 	if err != nil {
 		log.Fatal("Failed to insert into database", err)
 	}
@@ -43,7 +51,7 @@ func ComprobarCredenciales(user Usuario) (bool) {
 
 
 
-		if  user.password == passwordBBDD {
+		if  user.Password == passwordBBDD {
 				return true
     } else {
 				return false
