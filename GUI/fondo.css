@@ -60,3 +60,13 @@ body{
     text-align: center
     margin: 10px 0;
 }
+
+
+.register a{
+	font-size: 15px;
+	margin-bottom: 15px;
+	position: 
+	padding: 15px 0;
+    color: lightgrey;
+    font-family: "Calibri";
+}
