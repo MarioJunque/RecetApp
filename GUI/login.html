@@ -6,17 +6,17 @@
 	<link rel="stylesheet" href="fondo.css">
 </head>
 <body>
-	<div class="boxlog">
-		<h1>Login</h1>
-    <div class="inputbox">
-    	<input type="text" placeholder="Username" name="">
-    </div>
-     <div class="inputbox">
-    	<input type="password" placeholder="Password" name="">
-    </div>
-    	<input class="submitbutton" type="button" value="entrar">
-	</div>
-	
-	
+  <div class="boxlog">
+    <h1>Login</h1>
+	  <form action="/login" method="POST">
+        <div class="inputbox">
+    	  <input type="text" placeholder="Introduce tu usuario" name="usuario">
+        </div>
+        <div class="inputbox">
+    	  <input type="password" placeholder="Introduce tu contraseña" name="password">
+        </div>
+    	  <input class="submitbutton" type="submit" value="Entrar">
+      </form>
+  </div>
 </body>
 </html>
