@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
+	    "html/template"
+    "net/http"
 
 )
 
@@ -17,6 +19,36 @@ type Usuario struct {
 
 var db *sql.DB
 var err error
+
+func Login(w http.ResponseWriter, r *http.Request) {
+
+        fmt.Println("method:", r.Method) //get request method
+    if r.Method == "GET" {
+        t, _ := template.ParseFiles("index.html")
+        t.Execute(w, nil)
+    } else {
+
+//        user := funciones.Usuario {
+		user:= Usuario {
+            Nombre:   r.FormValue("nombre"),
+            Password: r.FormValue("password"),
+        }    
+        
+        usuarioValido := ComprobarCredenciales(user)
+//        usuarioValido := funciones.ComprobarCredenciales(user)
+        fmt.Println(usuarioValido)
+
+        if usuarioValido == true {
+
+            redirectTarget := "/internal"
+            http.Redirect(w, r, redirectTarget, 302)
+        } else {
+        	t, _ := template.ParseFiles("index.html")
+        	t.Execute(w, nil)
+        }    
+        }    
+
+    }
 
 func Autenticar(db *sql.DB, nombre string) (string, error){
 
