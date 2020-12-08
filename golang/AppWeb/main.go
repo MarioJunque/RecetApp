@@ -14,9 +14,13 @@ func pantallaInicio(w http.ResponseWriter, r *http.Request) {
     fs := http.FileServer(http.Dir("publico"))
     http.Handle("/publico/", http.StripPrefix("/publico/", fs))
     tmpl := template.Must(template.ParseFiles("publico/index.html"))   
-    tmpl.Execute(w, nil)
-
+    tmpl.Execute(w, nil)   
     r.ParseForm() 
+
+     if r.Method == "GET" {
+        redirectTarget := "/registro.html"
+        http.Redirect(w, r, redirectTarget, 302)
+     }   
 
 }    
 
@@ -34,10 +38,10 @@ func internal(w http.ResponseWriter, r *http.Request) {
 
 func main() {
     
-    http.HandleFunc("/", pantallaInicio)
+    http.HandleFunc("/recetapp", pantallaInicio)
     http.HandleFunc("/login", funciones.Login)
-
     http.HandleFunc("/internal", internal)
+    http.HandleFunc("/registro", funciones.Registro)
 
     err := http.ListenAndServe(":8080", nil) // setting listening port
     if err != nil {
