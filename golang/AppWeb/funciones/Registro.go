@@ -27,8 +27,8 @@ func Registro(w http.ResponseWriter, r *http.Request) {
 
         fmt.Println("method:", r.Method) //get request method
     if r.Method == "GET" {
-        t, _ := template.ParseFiles("index.html")
-        t.Execute(w, nil)
+    tmpl := template.Must(template.ParseFiles("publico/registro.html"))   
+    tmpl.Execute(w, nil)
     } else {
 
 		user:= Usuario {

@@ -17,11 +17,6 @@ func pantallaInicio(w http.ResponseWriter, r *http.Request) {
     tmpl.Execute(w, nil)   
     r.ParseForm() 
 
-     if r.Method == "GET" {
-        redirectTarget := "/registro.html"
-        http.Redirect(w, r, redirectTarget, 302)
-     }   
-
 }    
 
 
