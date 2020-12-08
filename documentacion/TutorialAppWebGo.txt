@@ -10,3 +10,6 @@ https://gowebexamples.com/templates/
 
 https://github.com/astaxie/build-web-application-with-golang/blob/master/en/04.1.md
 (Crear una página de Login)
+
+https://gist.github.com/mschoebel/9398202
+(Login con sesión y seguridad)
