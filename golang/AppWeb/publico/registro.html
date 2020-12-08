@@ -1,30 +1,27 @@
 <!DOCTYPE html>
   <html lang="es">
     <head>
-      <link rel="stylesheet" href="css/fondo.css">
+      <link href="/publico/css/fondo.css" rel="stylesheet">
       <meta charset="UTF-8">
       <title>Registro RecetApp</title>
     </head>
     <body>
+      <div class="boxlog">
       <h3><strong>Registro de usuario</strong></h3>
-      <div>
-        <form method="GET" action="">
+      <div class="inputbox">
+        <form method="POST" action="/registro">
+          <p>Nombre:</p>
+          <input type="text" name="nombre" placeholder="Introduce el nombre de usuario"><br>
+          <p>Correo electrónico:</p>
+          <input type="text" name="email" placeholder="Introduce el nombre de usuario"><br>
           <p>Nombre:</p>
           <input type="text" name="nombre" placeholder="Introduce el nombre de usuario"><br>
           <p>Contraseña:</p>
           <input type="password" name="password" placeholder="Introduce aqui la contraseña"><br>
           <p>Repetir contraseña:</p>
           <input type="password" name="confirm" placeholder="Vuelve a introducir la contraseña para confirmar"><br>
-          <p>Alergias:</p>
-          <label for="alergias">¿Tienes alguna alergía?</label>
-          <select name="cars" id="cars">
-	        <option value="Yes">Si</option>
-	        <option value="No">No</option>
-		  </select>
         </form>
-   
-
-
-
+      </div>
+    </div>
     </body>
   </html>
