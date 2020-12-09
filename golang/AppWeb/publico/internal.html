@@ -10,8 +10,24 @@
 <h1>Thanks for your message!</h1>
 {{else}}
 <body>
+	<h1>Accediste con éxito</h1>
 	<div class="boxlog">
-		<h1>Accediste con éxito</h1>
+		 <form method="POST" action="/internal">
+		 <input id="AnnadirIngrediente" name="AnnadirIngrediente" type="hidden" value="AnnadirIngrediente">
+         <input class="submitbutton" type="submit" value="Añadir ingrediente">
+        </form>
+        <form method="POST" action="/internal">
+		 <input id="MostrarIngredientes" name="MostrarIngredientes" type="hidden" value="MostrarIngredientes">
+         <input class="submitbutton" type="submit" value="Mostrar mis ingredientes">
+        </form>
+         <form method="POST" action="/internal">
+		 <input id="GenerarRecetas" name="GenerarRecetas" type="hidden" value="GenerarRecetas">
+         <input class="submitbutton" type="submit" value="Generar recetas con mis ingredientes">
+        </form>
+         <form method="POST" action="/internal">
+		 <input id="CerrarSesion" name="CerrarSesion" type="hidden" value="CerrarSesion">
+         <input class="submitbutton" type="submit" value="Cerrar sesión">
+        </form>
 {{end}}		
 </body>
 </html>
