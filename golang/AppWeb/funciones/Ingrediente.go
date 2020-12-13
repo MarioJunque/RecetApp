@@ -1,14 +1,13 @@
-//package funciones
+package funciones
 
 import (
 	"database/sql"
 	"fmt"
 	"log"
 	_ "github.com/go-sql-driver/mysql"
+    "net/http"
 )
 
-var db *sql.DB
-var err error
 
 type Ingrediente struct {
 	Id_ingrediente int
@@ -17,54 +16,37 @@ type Ingrediente struct {
 
 func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 
-        fmt.Println("method:", r.Method) //get request method
-    if r.Method == "GET" {
-        t, _ := template.ParseFiles("index.html")
-        t.Execute(w, nil)
-    } else {
-
-		ingrediente:= Ingrediente {
+	redirectTarget := "/recetapp"
+	ingrediente:= Ingrediente {
             Nombre:   r.FormValue("ingrediente"),
         }    
         
-        ingrediente.Id_ingrediente, err := ComprobarIngredienteBBDD(db, ingrediente.Nombre)
+    ingrediente.Id_ingrediente, err = ComprobarIngredienteBBDD(db, ingrediente.Nombre)
 
     switch err {
 	case sql.ErrNoRows:
 		fmt.Println("No está disponible este ingrediente en la base de datos")
 	case nil:
+		id_usuario := GetUserID(r)
 		id, err := Insert(db, ingrediente, id_usuario)
-		id_int := int(id)
+
+		switch err {
+		case sql.ErrNoRows:
+			log.Fatal(id, err)
+		case nil:
+			redirectTarget = "/internal"
+		default:
+			panic(err)
+		}
+
 	default:
 		panic(err)
 	}
-        if ing.Id_ingrediente != -1 {
 
-		id, err := Insert(db, ingrediente, user.Id_usuario)
-		id_int := int(id)
-
-		if id_int != -1 {
-			fmt.Println("Se ha añadido correctamente su ingrediente")
-		} else {
-			log.Fatal(err)
-			fmt.Println("Ocurrió un error al añadir el ingredite a su inventario")
-		}
-	} else {
-
-		fmt.Println("Lo sentimos, su ingrediente no se encuentra en nuestra base de datos")
-	}
+	http.Redirect(w, r, redirectTarget, 302)
 
 }
 
-            redirectTarget := "/internal"
-            http.Redirect(w, r, redirectTarget, 302)
-        } else {
-        	t, _ := template.ParseFiles("index.html")
-        	t.Execute(w, nil)
-        }    
-        }    
-
-    }
 
 //func BuscarIngrediente(id_usuario int) {
 
