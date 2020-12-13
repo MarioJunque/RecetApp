@@ -9,6 +9,7 @@ import (
 	"log"
 //	"html/template"
     "net/http"
+    "strconv"
 
 )
 
@@ -26,7 +27,7 @@ var cookieHandler = securecookie.New(
     securecookie.GenerateRandomKey(64),
     securecookie.GenerateRandomKey(32))
 
-func GetUserName(request *http.Request) (userName string) {
+/*func GetUserName(request *http.Request) (userName string) {
     if cookie, err := request.Cookie("session"); err == nil {
         cookieValue := make(map[string]string)
         if err = cookieHandler.Decode("session", cookie.Value, &cookieValue); err == nil {
@@ -34,11 +35,36 @@ func GetUserName(request *http.Request) (userName string) {
         }
     }
     return userName
+}*/
+
+func GetUserID(request *http.Request) (userID int) {
+    if cookie, err := request.Cookie("session"); err == nil {
+        cookieValue := make(map[string]string)
+        if err = cookieHandler.Decode("session", cookie.Value, &cookieValue); err == nil {
+           ID_string := cookieValue["name"]
+           userID, err = strconv.Atoi(ID_string)
+        }
+    }
+    return userID
 }
 
-func setSession(userName string, response http.ResponseWriter) {
+/*func setSession(userName string, response http.ResponseWriter) {
     value := map[string]string{
         "Nombre": userName,
+    }
+    if encoded, err := cookieHandler.Encode("session", value); err == nil {
+        cookie := &http.Cookie{
+            Name:  "session",
+            Value: encoded,
+            Path:  "/",
+        }
+        http.SetCookie(response, cookie)
+    }
+}*/
+
+func setSession(userID string, response http.ResponseWriter) {
+    value := map[string]string{
+        "Id_usuario": userID,
     }
     if encoded, err := cookieHandler.Encode("session", value); err == nil {
         cookie := &http.Cookie{
@@ -68,10 +94,11 @@ func Login(response http.ResponseWriter, request *http.Request) {
 	redirectTarget := "/recetapp"
 	if user.Nombre != "" && user.Password != "" {
 		// .. check credentials ..
-		usuarioValido := ComprobarCredenciales(user)
+		Id_usuario, usuarioValido := ComprobarCredenciales(user)
+		ID_string := strconv.Itoa(Id_usuario)
 		
 		if usuarioValido == true {
-			setSession(user.Nombre, response)
+			setSession(ID_string, response)
 			redirectTarget = "/internal"
 		}
 	}
@@ -108,7 +135,7 @@ func Login(response http.ResponseWriter, request *http.Request) {
 
     }*/
 
-func Autenticar(db *sql.DB, nombre string) (string, error){
+func Autenticar(db *sql.DB, nombre string) (string, int, error){
 
 	var user Usuario
 	stmt := "SELECT id_usuario, nombre, contraseña, email FROM usuarios WHERE nombre = ?"
@@ -117,15 +144,15 @@ func Autenticar(db *sql.DB, nombre string) (string, error){
 	switch err {
 	case sql.ErrNoRows:
   	fmt.Println("Ningún resultado de la base de datos")
-  	return "NOK", err
+  	return "NOK", -1, err
 	case nil:
-  	return user.Password, err
+  	return user.Password, user.Id_usuario, err
 	default:
   		panic(err)
 	}
 }
 
-func ComprobarCredenciales(user Usuario) (bool) {
+func ComprobarCredenciales(user Usuario) (int, bool) {
 
 	db, err := sql.Open("mysql", "root:root@/recetapp")
 	if err != nil {
@@ -133,7 +160,7 @@ func ComprobarCredenciales(user Usuario) (bool) {
 	}
 	defer db.Close()
 
-	passwordBBDD, err := Autenticar(db, user.Nombre)
+	passwordBBDD, id_usuario, err := Autenticar(db, user.Nombre)
 	if err != nil {
 		log.Fatal("Failed to insert into database", err)
 	}
@@ -142,8 +169,8 @@ func ComprobarCredenciales(user Usuario) (bool) {
 
 
 		if  user.Password == passwordBBDD {
-				return true
+				return id_usuario, true
     } else {
-				return false
+				return -1, false
     }
 }
