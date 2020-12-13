@@ -6,6 +6,7 @@ import (
 	"log"
 	_ "github.com/go-sql-driver/mysql"
     "net/http"
+    "html/template"
 )
 
 
@@ -15,6 +16,12 @@ type Ingrediente struct {
 }
 
 func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
+
+
+	if r.Method == "GET" {
+    tmpl := template.Must(template.ParseFiles("publico/annadirIngrediente.html"))   
+    tmpl.Execute(w, nil)
+    } else {
 
 	redirectTarget := "/recetapp"
 	ingrediente:= Ingrediente {
@@ -44,6 +51,8 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, redirectTarget, 302)
+
+	}
 
 }
 
