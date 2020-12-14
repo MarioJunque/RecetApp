@@ -66,11 +66,11 @@ func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 	err := row.Scan(&ingrediente.Id_ingrediente)
 	switch err {
 	case sql.ErrNoRows:
-		//  	fmt.Println("No está disponible este ingrediente en la base de datos")
+		fmt.Println("No está disponible este ingrediente en la base de datos")
 		return -1, err
 	case nil:
 		return ingrediente.Id_ingrediente, err
-	default:
+	default:		
 		panic(err)
 	}
 }
