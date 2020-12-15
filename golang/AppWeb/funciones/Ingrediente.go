@@ -9,7 +9,6 @@ import (
     "html/template"
 )
 
-
 type Ingrediente struct {
 	Id_ingrediente int
 	Nombre         string
@@ -62,7 +61,10 @@ func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 
 	var ingrediente Ingrediente
 	stmt := "SELECT id_ingrediente FROM ingredientes WHERE nombre = ?"
-	row := db.QueryRow(stmt, nombreIngrediente)
+	fmt.Println(nombreIngrediente)
+	fmt.Println(stmt)
+	row := db.QueryRow(stmt,nombreIngrediente)
+	fmt.Println(row)
 	err := row.Scan(&ingrediente.Id_ingrediente)
 	switch err {
 	case sql.ErrNoRows:
