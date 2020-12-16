@@ -88,6 +88,8 @@ func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 
 func Insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) {
 
+
+	fmt.Println(id_usuario)
 	stmt, err := db.Prepare("INSERT INTO ingrediente_usuario (id_ingredientes, id_usuarios) VALUES(?,?)")
 	if err != nil {
 		return -1, err

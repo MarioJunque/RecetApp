@@ -41,7 +41,7 @@ func GetUserID(request *http.Request) (userID int) {
     if cookie, err := request.Cookie("session"); err == nil {
         cookieValue := make(map[string]string)
         if err = cookieHandler.Decode("session", cookie.Value, &cookieValue); err == nil {
-           ID_string := cookieValue["name"]
+           ID_string := cookieValue["Name"]
            userID, err = strconv.Atoi(ID_string)
         }
     }
@@ -64,8 +64,10 @@ func GetUserID(request *http.Request) (userID int) {
 
 func setSession(userID string, response http.ResponseWriter) {
     value := map[string]string{
-        "Id_usuario": userID,
+//        "Id_usuario": userID,
+        "Name": userID,
     }
+    fmt.Println(value)
     if encoded, err := cookieHandler.Encode("session", value); err == nil {
         cookie := &http.Cookie{
             Name:  "session",
