@@ -13,3 +13,6 @@ https://github.com/astaxie/build-web-application-with-golang/blob/master/en/04.1
 
 https://mschoebel.info/2014/03/09/snippet-golang-webapp-login-logout/
 (Login con sesión y seguridad)
+
+https://www.golangprograms.com/example-of-golang-crud-using-mysql-from-scratch.html
+(Mostrar html + go)
