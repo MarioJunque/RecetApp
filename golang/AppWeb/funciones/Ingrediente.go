@@ -21,10 +21,16 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
     tmpl.Execute(w, nil)
     } else {
 
+    db, err := sql.Open("mysql", "root:root@/recetapp")
+	if err != nil {
+		log.Fatal("Cannot open DB connection", err)
+	}
+	defer db.Close()	
+
 	redirectTarget := "/recetapp"
 	ingrediente:= Ingrediente {
             Nombre:   r.FormValue("ingrediente"),
-        }    
+        }        
         
     ingrediente.Id_ingrediente, err = ComprobarIngredienteBBDD(db, ingrediente.Nombre)
 
@@ -59,13 +65,16 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 
 func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error) {
 
+
 	var ingrediente Ingrediente
-	stmt := "SELECT id_ingrediente FROM ingredientes WHERE nombre = ?"
+/*	stmt := "SELECT id_ingrediente FROM ingredientes WHERE nombre = ?"
 	fmt.Println(nombreIngrediente)
 	fmt.Println(stmt)
 	row := db.QueryRow(stmt,nombreIngrediente)
 	fmt.Println(row)
-	err := row.Scan(&ingrediente.Id_ingrediente)
+	err := row.Scan(&ingrediente.Id_ingrediente)*/
+	row := db.QueryRow("SELECT id_ingrediente FROM ingredientes WHERE nombre = ?",nombreIngrediente)
+    err = row.Scan(&ingrediente.Id_ingrediente)
 	switch err {
 	case sql.ErrNoRows:
 		fmt.Println("No está disponible este ingrediente en la base de datos")
