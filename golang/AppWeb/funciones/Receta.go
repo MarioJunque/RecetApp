@@ -1,6 +1,6 @@
 package funciones
 
-import (
+/*import (
 	"database/sql"
 	"fmt"
 	"log"
@@ -37,12 +37,10 @@ func MostrarReceta(w http.ResponseWriter, r *http.Request){
 
 func LeerReceta(db *sql.DB,id_receta int) (string,error){
 
-   stmt = "SELECT instrucciones from recetas WHERE id_receta = ?"
-
-
+ 	stmt = "SELECT instrucciones from recetas WHERE id_receta = ?"
 
 }
 
 func paginaRecetaHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, http.ServeFile(w http.ResponseWriter, r *http.Request, "GenerarReceta.html"))
-}
+}*/

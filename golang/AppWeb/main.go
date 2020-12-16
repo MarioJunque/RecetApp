@@ -11,8 +11,8 @@ import (
 
 func pantallaInicio(w http.ResponseWriter, r *http.Request) {
 
-    fs := http.FileServer(http.Dir("publico"))
-    http.Handle("/publico/", http.StripPrefix("/publico/", fs))
+//    fs := http.FileServer(http.Dir("publico"))
+//    http.Handle("/publico/", http.StripPrefix("/publico/", fs))
     tmpl := template.Must(template.ParseFiles("publico/index.html"))   
     tmpl.Execute(w, nil)   
     r.ParseForm() 
@@ -39,7 +39,7 @@ func main() {
     http.HandleFunc("/internal", internal)
     http.HandleFunc("/registro", funciones.Registro)
     http.HandleFunc("/ingrediente", funciones.AnnadirIngredienteAMiLista)
-    http.HandleFunc("/receta",funciones.Receta)
+//    http.HandleFunc("/receta",funciones.Receta)
 
     err := http.ListenAndServe(":8080", nil) // setting listening port
     if err != nil {
