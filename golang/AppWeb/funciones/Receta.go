@@ -38,6 +38,17 @@ func MostrarReceta(w http.ResponseWriter, r *http.Request){
 func LeerReceta(db *sql.DB,id_receta int) (string,error){
 
  	stmt = "SELECT instrucciones from recetas WHERE id_receta = ?"
+ 	rows, err := db.Query(stmt)
+
+ 	defer rows.Close()
+
+    var recetas []Receta
+for rows.Next() {
+    var recep Receta
+    err := rows.Scan(&recep.Id_receta, &recep.NumeroComensales, &recep.Instrucciones) // check err
+    users = append(recetas, recep)
+}
+err := rows.Err() // check err
 
 }
 
