@@ -24,18 +24,12 @@ type Receta struct {
 
 func MostrarMisRecetas(id_usuario int) {
 
-	db, err := sql.Open("mysql", "root:root@/recetapp")
-	if err != nil {
-		log.Fatal("Cannot open DB connection", err)
-	}
-	defer db.Close()
-
 	misRecetas := ObtenerMisRecetas(id_usuario)
     fmt.Println(misRecetas)
 
 }
 
-func IngredientesUsuarioReceta(id_usuario int) ([]Receta, error) {
+func IngredientesUsuarioReceta(db *sql.DB, id_usuario int) ([]Receta, error) {
 
 	var receta Receta
 	var ingredientesUsuario []Receta
@@ -66,7 +60,7 @@ func IngredientesUsuarioReceta(id_usuario int) ([]Receta, error) {
 
 }
 
-func NumeroIngredientesReceta() ([]Receta, error) {
+func NumeroIngredientesReceta(db *sql.DB) ([]Receta, error) {
 
 	var receta Receta
 	var ingredientesReceta []Receta
@@ -98,8 +92,15 @@ func NumeroIngredientesReceta() ([]Receta, error) {
 
 func ObtenerMisRecetas(id_usuario int) ([]Receta){
 
-	ingredientesUsuario, _ := IngredientesUsuarioReceta(id_usuario)
-	ingredientesReceta, _ := NumeroIngredientesReceta()
+
+    db, err := sql.Open("mysql", "root:root@/recetapp")
+    if err != nil {
+        log.Fatal("Cannot open DB connection", err)
+    }
+    defer db.Close()
+
+	ingredientesUsuario, _ := IngredientesUsuarioReceta(db, id_usuario)
+	ingredientesReceta, _ := NumeroIngredientesReceta(db)
     var misRecetas []Receta
 
     for _, a1 := range ingredientesReceta {
