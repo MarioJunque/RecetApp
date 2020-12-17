@@ -97,22 +97,18 @@ func NumeroIngredientesReceta() ([]Receta, error) {
 
 func ObtenerMisRecetas(id_usuario int) ([]Receta){
 
-	var recetas []Receta
-//	ingredientesUsuario, err := IngredientesUsuarioReceta(id_usuario)
-//	ingredientesReceta, err := NumeroIngredientesReceta()
+	ingredientesUsuario, err := IngredientesUsuarioReceta(id_usuario)
+	ingredientesReceta, err := NumeroIngredientesReceta()
+    var misRecetas []Receta
 
-	return recetas
+    for _, a1 := range ingredientesReceta {
+        for _, a2 := range ingredientesUsuario {
+            if a1 == a2 {
+                misRecetas = append(misRecetas, a2)
+            }
+        }
+    }
 
-    //for i := 0; i < len(ingredientesReceta); i++ {​​​​​
-
-            //if ingredientesUsuario[i].id_receta == ingredientesReceta[i].id_receta && ingredientesUsuario[i].numeroIngredientes == ingredientesReceta[i].numeroIngredientes {​​​​​
-                
-                //Select * from recetas where id_receta = ingredientesUsuario[i].id_receta 
-                //recetas = append(recetas, ingredientesUsuario[i].id_receta)
-            //}​​​​​ else {
-
-            //	fmt.Println("No hay recetas con los ingredientes introducidos")
-            //}
-        //}​​​​​ return recetas
+	return misRecetas
 
     }
