@@ -2,7 +2,7 @@ package recetas
 
 import (
 	"database/sql"
-//	"fmt"
+	"fmt"
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -30,7 +30,8 @@ func MostrarMisRecetas(id_usuario int) {
 	}
 	defer db.Close()
 
-	//ObtenerMisRecetas()
+	misRecetas := ObtenerMisRecetas(id_usuario)
+    fmt.Println(misRecetas)
 
 }
 
@@ -97,8 +98,8 @@ func NumeroIngredientesReceta() ([]Receta, error) {
 
 func ObtenerMisRecetas(id_usuario int) ([]Receta){
 
-	ingredientesUsuario, err := IngredientesUsuarioReceta(id_usuario)
-	ingredientesReceta, err := NumeroIngredientesReceta()
+	ingredientesUsuario, _ := IngredientesUsuarioReceta(id_usuario)
+	ingredientesReceta, _ := NumeroIngredientesReceta()
     var misRecetas []Receta
 
     for _, a1 := range ingredientesReceta {

@@ -37,7 +37,8 @@ func main() {
 						recetas.MostrarMisIngredientes(id_usuario)
 					}
 					if opcion2 == 3 {
-						usuario.AnnadirIntoleranciasAlimenticias(id_usuario)
+						
+//						usuario.AnnadirIntoleranciasAlimenticias(id_usuario)
 					}
 					if opcion2 == 4 {
 						break
