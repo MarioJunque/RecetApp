@@ -107,6 +107,12 @@ func Login(response http.ResponseWriter, request *http.Request) {
 	http.Redirect(response, request, redirectTarget, 302)
 }
 
+func Logout(response http.ResponseWriter, request *http.Request) {
+	redirectTarget := "/recetapp"
+	clearSession(response)
+	http.Redirect(response, request, redirectTarget, 302)
+}
+
 /*func Login(w http.ResponseWriter, r *http.Request) {
 
         fmt.Println("method:", r.Method) //get request method

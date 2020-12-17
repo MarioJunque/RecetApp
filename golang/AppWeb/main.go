@@ -51,6 +51,7 @@ func main() {
     http.HandleFunc("/registro", funciones.Registro)
     http.HandleFunc("/AnnadirIngrediente", annadirIngrediente)
     http.HandleFunc("/ingrediente", funciones.AnnadirIngredienteAMiLista)
+	http.HandleFunc("/logout", funciones.Login)
 //    http.HandleFunc("/receta",funciones.Receta)
 
     err := http.ListenAndServe(":8080", nil) // setting listening port
