@@ -165,4 +165,4 @@ err := rows.Err() // check err
 
 func paginaRecetaHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, http.ServeFile(w http.ResponseWriter, r *http.Request, "GenerarReceta.html"))
-}*/*/
+}*/
