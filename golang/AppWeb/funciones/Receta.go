@@ -6,16 +6,17 @@ import (
 	"fmt"
 	"log"
 	_ "github.com/go-sql-driver/mysql"
+	"html/template"
+    "net/http"
 
 )
 
 type Receta struct {
-	id_receta int
-	nombre    string
-	numeroComensales int
-	instrucciones string
-	nombre_receta string
-	numeroIngredientes int
+	Id_receta int
+	NumeroComensales int
+	Instrucciones string
+	Nombre_receta string
+	NumeroIngredientes int
 }
 
 /*func Login(response http.ResponseWriter, request *http.Request) {
@@ -34,10 +35,13 @@ type Receta struct {
 	http.Redirect(response, request, redirectTarget, 302)
 }*/
 
-func MostrarMisRecetas(id_usuario int) {
+func MostrarMisRecetas(w http.ResponseWriter, r *http.Request) {
 
-	misRecetas := ObtenerMisRecetas(id_usuario)
-    fmt.Println(misRecetas)
+	id_usuario := GetUserID(r)
+	MisRecetas := ObtenerMisRecetas(id_usuario)
+    fmt.Println(MisRecetas)
+    tmpl := template.Must(template.ParseFiles("publico/mostrarMisRecetas.html")) 
+    tmpl.Execute(w,MisRecetas)
 
 }
 
@@ -47,7 +51,7 @@ func IngredientesUsuarioReceta(db *sql.DB, id_usuario int) ([]Receta, error) {
 	var ingredientesUsuario []Receta
 
 
-	stmt := "select id_receta, count(ingrediente_receta.id_ingredientes) from recetas left outer join ingrediente_receta on recetas.id_receta = ingrediente_receta.id_recetas join ingrediente_usuario on ingrediente_receta.id_ingredientes = ingrediente_usuario.id_ingredientes and ingrediente_usuario.id_usuarios = ? group by recetas.id_receta;"
+	stmt := "select id_receta, nombre_receta, count(ingrediente_receta.id_ingredientes) from recetas left outer join ingrediente_receta on recetas.id_receta = ingrediente_receta.id_recetas join ingrediente_usuario on ingrediente_receta.id_ingredientes = ingrediente_usuario.id_ingredientes and ingrediente_usuario.id_usuarios = ? group by recetas.id_receta;"
 
 	rows, err := db.Query(stmt, id_usuario)
 
@@ -57,7 +61,7 @@ func IngredientesUsuarioReceta(db *sql.DB, id_usuario int) ([]Receta, error) {
     defer rows.Close()
 
     for rows.Next() {
-        err := rows.Scan(&receta.id_receta,&receta.numeroIngredientes)
+        err := rows.Scan(&receta.Id_receta,&receta.Nombre_receta,&receta.NumeroIngredientes)
         if err != nil {
             log.Fatal(err)
         }
@@ -77,7 +81,7 @@ func NumeroIngredientesReceta(db *sql.DB) ([]Receta, error) {
 	var receta Receta
 	var ingredientesReceta []Receta
 
-	stmt := "select id_receta, count(id_ingredientes) from recetas left outer join ingrediente_receta on recetas.id_receta = ingrediente_receta.id_recetas group by id_receta;"
+	stmt := "select id_receta, nombre_receta, count(id_ingredientes) from recetas left outer join ingrediente_receta on recetas.id_receta = ingrediente_receta.id_recetas group by id_receta;"
 
 	rows, err := db.Query(stmt)
 
@@ -87,7 +91,7 @@ func NumeroIngredientesReceta(db *sql.DB) ([]Receta, error) {
     defer rows.Close()
 
     for rows.Next() {
-        err := rows.Scan(&receta.id_receta,&receta.numeroIngredientes)
+        err := rows.Scan(&receta.Id_receta,&receta.Nombre_receta,&receta.NumeroIngredientes)
         if err != nil {
             log.Fatal(err)
         }

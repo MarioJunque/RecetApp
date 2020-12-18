@@ -1,0 +1,17 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>Recetas</title>
+	  <link href="/publico/css/fondo.css" rel="stylesheet">
+</head>
+<body>
+	<div class="boxlog">
+		{{range .}}
+			<p> ID {{ .Id_receta }} </p>
+     		<p>Nombre: {{ .Nombre_receta }}</p>
+		{{end}}
+	</div>	
+</body>
+</html>
