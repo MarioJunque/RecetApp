@@ -1,32 +1,31 @@
 package funciones
 
-
 import (
 	"database/sql"
 	"fmt"
-	"log"
-	_ "github.com/go-sql-driver/mysql"
 	"html/template"
-    "net/http"
+	"log"
+	"net/http"
 
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type Receta struct {
-	Id_receta int
-	NumeroComensales int
-	Instrucciones string
-	Nombre_receta string
+	Id_receta          int
+	NumeroComensales   int
+	Instrucciones      string
+	Nombre_receta      string
 	NumeroIngredientes int
 }
 
 /*func Login(response http.ResponseWriter, request *http.Request) {
- 
+
 	redirectTarget := "/recetapp"
 	if user.Nombre != "" && user.Password != "" {
 		// .. check credentials ..
 		Id_usuario, usuarioValido := ComprobarCredenciales(user)
 		ID_string := strconv.Itoa(Id_usuario)
-		
+
 		if usuarioValido == true {
 			setSession(ID_string, response)
 			redirectTarget = "/internal"
@@ -39,9 +38,9 @@ func MostrarMisRecetas(w http.ResponseWriter, r *http.Request) {
 
 	id_usuario := GetUserID(r)
 	MisRecetas := ObtenerMisRecetas(id_usuario)
-    fmt.Println(MisRecetas)
-    tmpl := template.Must(template.ParseFiles("publico/mostrarMisRecetas.html")) 
-    tmpl.Execute(w,MisRecetas)
+	fmt.Println(MisRecetas)
+	tmpl := template.Must(template.ParseFiles("publico/mostrarMisRecetas.html"))
+	tmpl.Execute(w, MisRecetas)
 
 }
 
@@ -50,29 +49,28 @@ func IngredientesUsuarioReceta(db *sql.DB, id_usuario int) ([]Receta, error) {
 	var receta Receta
 	var ingredientesUsuario []Receta
 
-
 	stmt := "select id_receta, nombre_receta, count(ingrediente_receta.id_ingredientes) from recetas left outer join ingrediente_receta on recetas.id_receta = ingrediente_receta.id_recetas join ingrediente_usuario on ingrediente_receta.id_ingredientes = ingrediente_usuario.id_ingredientes and ingrediente_usuario.id_usuarios = ? group by recetas.id_receta;"
 
 	rows, err := db.Query(stmt, id_usuario)
 
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer rows.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
 
-    for rows.Next() {
-        err := rows.Scan(&receta.Id_receta,&receta.Nombre_receta,&receta.NumeroIngredientes)
-        if err != nil {
-            log.Fatal(err)
-        }
+	for rows.Next() {
+		err := rows.Scan(&receta.Id_receta, &receta.Nombre_receta, &receta.NumeroIngredientes)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	ingredientesUsuario = append(ingredientesUsuario, receta)
+		ingredientesUsuario = append(ingredientesUsuario, receta)
 
-    }
-    if err := rows.Err(); err != nil {
-        log.Fatal(err)
-    } 
-    return ingredientesUsuario, err
+	}
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+	return ingredientesUsuario, err
 
 }
 
@@ -85,51 +83,105 @@ func NumeroIngredientesReceta(db *sql.DB) ([]Receta, error) {
 
 	rows, err := db.Query(stmt)
 
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer rows.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
 
-    for rows.Next() {
-        err := rows.Scan(&receta.Id_receta,&receta.Nombre_receta,&receta.NumeroIngredientes)
-        if err != nil {
-            log.Fatal(err)
-        }
+	for rows.Next() {
+		err := rows.Scan(&receta.Id_receta, &receta.Nombre_receta, &receta.NumeroIngredientes)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	ingredientesReceta = append(ingredientesReceta, receta)
+		ingredientesReceta = append(ingredientesReceta, receta)
 
-    }
-    if err := rows.Err(); err != nil {
-        log.Fatal(err)
-    }
+	}
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
 
-    return ingredientesReceta, err
+	return ingredientesReceta, err
 }
 
-func ObtenerMisRecetas(id_usuario int) ([]Receta){
+func ObtenerMisRecetas(id_usuario int) []Receta {
 
-
-    db, err := sql.Open("mysql", "root:root@/recetapp")
-    if err != nil {
-        log.Fatal("Cannot open DB connection", err)
-    }
-    defer db.Close()
+	db, err := sql.Open("mysql", "root:root@/recetapp")
+	if err != nil {
+		log.Fatal("Cannot open DB connection", err)
+	}
+	defer db.Close()
 
 	ingredientesUsuario, _ := IngredientesUsuarioReceta(db, id_usuario)
 	ingredientesReceta, _ := NumeroIngredientesReceta(db)
-    var misRecetas []Receta
+	var misRecetas []Receta
 
-    for _, a1 := range ingredientesReceta {
-        for _, a2 := range ingredientesUsuario {
-            if a1 == a2 {
-                misRecetas = append(misRecetas, a2)
-            }
-        }
-    }
+	for _, a1 := range ingredientesReceta {
+		for _, a2 := range ingredientesUsuario {
+			if a1 == a2 {
+				misRecetas = append(misRecetas, a2)
+			}
+		}
+	}
 
 	return misRecetas
 
-    }
+}
+
+func RecetasExistentes(db *sql.DB) ([]Receta, error) {
+
+	var receta Receta
+	var recetaExistente []Receta
+
+	stmt := "select id_receta,nombre_receta,instrucciones from recetas;"
+
+	rows, err := db.Query(stmt)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err := rows.Scan(&receta.Id_receta, &receta.Nombre_receta, &receta.Instrucciones)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		recetaExistente = append(recetaExistente, receta)
+
+	}
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	return recetaExistente, err
+}
+
+func MostrarRecetasExistentes() []Receta {
+
+	db, err := sql.Open("mysql", "root:root@/recetapp")
+	if err != nil {
+		log.Fatal("Cannot open DB connection", err)
+	}
+	defer db.Close()
+
+	ingredientesRecetaExistente, _ := RecetasExistentes(db)
+
+	var recetas []Receta
+	for _, a1 := range ingredientesRecetaExistente {
+		recetas = append(recetas, a1)
+	}
+	return recetas
+}
+
+func MostrarReceta(w http.ResponseWriter, r *http.Request) {
+	Recetas := MostrarRecetasExistentes()
+	fmt.Println(Recetas)
+	tmpl := template.Must(template.ParseFiles("publico/mostrarRecetasExistentes.html"))
+	tmpl.Execute(w, Recetas)
+
+}
 
 /*func MostrarReceta(w http.ResponseWriter, r *http.Request){
 
