@@ -11,6 +11,9 @@
 		{{range .}}
 			<p> ID {{ .Id_receta }} </p>
      		<p>Nombre: {{ .Nombre_receta }}</p>
+     		 <form method="POST" action="/internal">
+	  	<input class="submitbutton" type="submit" name="volver" value="volver">
+	  </form>
 		{{end}}
 	</div>	
 </body>
