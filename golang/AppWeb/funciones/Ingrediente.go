@@ -102,36 +102,15 @@ func Insert(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) 
 	return res.LastInsertId()
 }
 
-func MostrarMisIngredientes(id_usuario int) {
-
-	//	var ingrediente Ingrediente
-
-	db, err := sql.Open("mysql", "root:root@/recetapp")
-	if err != nil {
-		log.Fatal("Cannot open DB connection", err)
-	}
-	defer db.Close()
-
-	ingredientes, err := ObtenerMisIngredientes(db, id_usuario)
-
-	if err != nil {
-		log.Fatal(err)
-	} else {
-		fmt.Println(ingredientes)
-		//		fmt.Println("%d\n",ingrediente.id_ingrediente)
-		//    	fmt.Println("%s\n",ingrediente.nombre)
-	}
-}
-
-func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
+func MisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
 
 	var ingrediente Ingrediente
-	var ingredientes []Ingrediente
-	stmt := "select id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios = ?"
+	var miIngrediente []Ingrediente
+
+	stmt := "select id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios = ?;"
 
 	rows, err := db.Query(stmt, id_usuario)
 
-	//    rows, err := db.Query("select id_ingredientes, nombre from ingrediente_usuario, ingredientes where ingrediente_usuario.id_ingredientes=ingredientes.id_ingrediente AND id_usuarios=?;", id_usuario)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -143,15 +122,40 @@ func ObtenerMisIngredientes(db *sql.DB, id_usuario int) ([]Ingrediente, error) {
 			log.Fatal(err)
 		}
 
-		//    ingredientes = append(ingredientes, Ingrediente{id_ingrediente: ingrediente.id_ingrediente, nombre: ingrediente.nombre})
-		ingredientes = append(ingredientes, ingrediente)
+		miIngrediente = append(miIngrediente, ingrediente)
 
 	}
 	if err := rows.Err(); err != nil {
 		log.Fatal(err)
 	}
 
-	return ingredientes, err
+	return miIngrediente, err
+}
+
+func ObtenerMiIngrediente(id_usuario int) []Ingrediente {
+
+	db, err := sql.Open("mysql", "root:root@/recetapp")
+	if err != nil {
+		log.Fatal("Cannot open DB connection", err)
+	}
+	defer db.Close()
+
+	miIngrediente, _ := MisIngredientes(db, id_usuario)
+
+	var ingredientes []Ingrediente
+	for _, a1 := range miIngrediente {
+		ingredientes = append(ingredientes, a1)
+	}
+	return ingredientes
+}
+
+func MostrarMisIngredientes(w http.ResponseWriter, r *http.Request) {
+	id_usuario := GetUserID(r)
+	Ingredientes := ObtenerMiIngrediente(id_usuario)
+	fmt.Println(Ingredientes)
+	tmpl := template.Must(template.ParseFiles("publico/mostrarMisIngredientes.html"))
+	tmpl.Execute(w, Ingredientes)
+
 }
 
 func BorrarIngrediente(db *sql.DB, id_ingrediente int, id_usuario int) {
