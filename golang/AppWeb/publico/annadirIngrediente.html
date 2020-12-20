@@ -1,19 +1,24 @@
 <!DOCTYPE html>
   <html lang="es">
     <head>
-      <link href="/publico/css/fondo.css" rel="stylesheet">
       <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
       <title>Registro RecetApp</title>
+	  <link href="/publico/css/fondo.css" rel="stylesheet">
     </head>
     <body>
       <div class="boxlog">
-      <div class="inputbox">
+      
         <form method="POST" action="/ingrediente">
-          <p style="color: lightgrey;">Introduzca el nombre del ingrediente que desea añadir a su lista:</p>
-          <input type="text" name="ingrediente" placeholder="Escriba aqui el ingrediente"><br>
-          <input class="submitbutton" type="submit" value="Buscar y añadir">
+			<div class="inputbox">
+				<p style="color: lightgrey;">Introduzca el nombre del ingrediente que desea añadir a su lista:</p>
+				<input type="text" name="ingrediente" placeholder="Escriba aqui el ingrediente"><br>
+			</div>
+			<input class="submitbutton" type="submit" value="Buscar y añadir">
         </form>
+		<form method="POST" action="/internal">
+		<input class="submitbutton" type="submit" value="Volver">
+		</form>
       </div>
-    </div>
     </body>
   </html>
