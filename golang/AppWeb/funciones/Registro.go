@@ -1,11 +1,13 @@
 package funciones
+
 import (
-	"fmt"
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
-	"log"
+	"fmt"
 	"html/template"
-    "net/http"
+	"log"
+	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 //type Usuario struct {
@@ -16,41 +18,41 @@ import (
 //}
 
 type Intolerancias struct {
-	gluten int
-    lactosa int
-    histamina int
+	gluten    int
+	lactosa   int
+	histamina int
 }
 
 //var u Usuario
 
 func Registro(w http.ResponseWriter, r *http.Request) {
 
-    fmt.Println("method:", r.Method) //get request method
-    redirectTarget := "/recetapp"
-    if r.Method == "GET" {
-    tmpl := template.Must(template.ParseFiles("publico/registro.html"))   
-    tmpl.Execute(w, nil)
-    } else {
+	fmt.Println("method:", r.Method) //get request method
+	redirectTarget := "/recetApp"
+	if r.Method == "GET" {
+		tmpl := template.Must(template.ParseFiles("publico/registro.html"))
+		tmpl.Execute(w, nil)
+	} else {
 
-		user:= Usuario {
-            Nombre:   r.FormValue("nombre"),
-            Password: r.FormValue("password"),
-            Correo:   r.FormValue("email"),
-        }    
-        
-        resultado := RegistrarUsuario(user)
+		user := Usuario{
+			Nombre:   r.FormValue("nombre"),
+			Password: r.FormValue("password"),
+			Correo:   r.FormValue("email"),
+		}
 
-        if resultado == "RegistroOK" {
+		resultado := RegistrarUsuario(user)
 
-            redirectTarget = "/recetapp"
-        } else {
-        fmt.Println("Error en el registro")
-        redirectTarget = "/recetapp"
-        }    
-       }    
+		if resultado == "RegistroOK" {
+
+			redirectTarget = "/recetApp"
+		} else {
+			fmt.Println("Error en el registro")
+			redirectTarget = "/recetApp"
+		}
+	}
 
 	http.Redirect(w, r, redirectTarget, 302)
-    }
+}
 
 func RegistrarUsuario(user Usuario) string {
 
@@ -66,14 +68,14 @@ func RegistrarUsuario(user Usuario) string {
 	}
 	log.Printf("Inserted row with ID of: %d\n", id)
 
-		RegistroOK := "Sus datos se han registrado con éxito"
-		RegistroNOK := "Vaya, parece que hubo un problema. Vuelva a intentarlo"
+	RegistroOK := "Sus datos se han registrado con éxito"
+	RegistroNOK := "Vaya, parece que hubo un problema. Vuelva a intentarlo"
 
 	if id == "OK" {
-				return RegistroOK
-    } else {
-				return RegistroNOK
-    }
+		return RegistroOK
+	} else {
+		return RegistroNOK
+	}
 }
 
 func insert(db *sql.DB, user Usuario) (string, error) {
@@ -91,7 +93,7 @@ func insert(db *sql.DB, user Usuario) (string, error) {
 }
 
 func AnnadirIntoleranciasAlimenticias(id_usuario int) {
-	
+
 	var int Intolerancias
 	var int_gluten string
 	var int_lactosa string
@@ -100,30 +102,30 @@ func AnnadirIntoleranciasAlimenticias(id_usuario int) {
 	fmt.Println("¿Eres intolerante al gluten? [s|n]")
 	fmt.Scanln(&int_gluten)
 	if int_gluten == "s" {
-        int.gluten = 1
-    } else if int_gluten == "n" {
-        int.gluten = 0
-    } else {
-    	fmt.Println("Error. La respuesta dada es incorrecta")
-    }
+		int.gluten = 1
+	} else if int_gluten == "n" {
+		int.gluten = 0
+	} else {
+		fmt.Println("Error. La respuesta dada es incorrecta")
+	}
 	fmt.Println("¿Eres intolerante a la lactosa? [s|n]")
 	fmt.Scanln(&int_lactosa)
 	if int_lactosa == "s" {
-        int.lactosa = 1
-    } else if int_lactosa == "n" {
-        int.lactosa = 0
-    } else {
-    	fmt.Println("Error. La respuesta dada es incorrecta")
-    }
-    fmt.Println("¿Eres intolerante a la histamina? [s|n]")
+		int.lactosa = 1
+	} else if int_lactosa == "n" {
+		int.lactosa = 0
+	} else {
+		fmt.Println("Error. La respuesta dada es incorrecta")
+	}
+	fmt.Println("¿Eres intolerante a la histamina? [s|n]")
 	fmt.Scanln(&int_histamina)
 	if int_histamina == "s" {
-        int.histamina = 1
-    } else if int_histamina == "n" {
-        int.histamina = 0
-    } else {
-    	fmt.Println("Error. La respuesta dada es incorrecta")
-    }
+		int.histamina = 1
+	} else if int_histamina == "n" {
+		int.histamina = 0
+	} else {
+		fmt.Println("Error. La respuesta dada es incorrecta")
+	}
 
 	db, err := sql.Open("mysql", "root:root@/recetapp")
 	if err != nil {
@@ -154,11 +156,3 @@ func InsertIntolerancias(db *sql.DB, intolerancia Intolerancias, id_usuario int)
 	}
 	return "OK", err
 }
-
-
-
-
-
-
-
-
