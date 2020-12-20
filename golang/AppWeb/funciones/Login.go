@@ -97,7 +97,7 @@ func Login(response http.ResponseWriter, request *http.Request) {
 		Nombre:   request.FormValue("nombre"),
 		Password: request.FormValue("password"),
 	}
-	redirectTarget := "/recetapp"
+	redirectTarget := "/usuarioInvalido"
 	if user.Nombre != "" && user.Password != "" {
 		// .. check credentials ..
 		Id_usuario, usuarioValido := ComprobarCredenciales(user)

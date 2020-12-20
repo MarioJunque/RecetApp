@@ -56,10 +56,19 @@ func pantallaInicioTrasLogout(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func usuarioNoValido(w http.ResponseWriter, r *http.Request) {
+
+	tmpl := template.Must(template.ParseFiles("publico/usuarioNoValido.html"))
+	tmpl.Execute(w, nil)
+	r.ParseForm()
+
+}
+
 func main() {
 
 	http.HandleFunc("/recetapp", pantallaInicio)
 	http.HandleFunc("/login", funciones.Login)
+	http.HandleFunc("/usuarioInvalido", usuarioNoValido)
 	http.HandleFunc("/internal", internal)
 	http.HandleFunc("/registro", funciones.Registro)
 	http.HandleFunc("/AnnadirIngrediente", annadirIngrediente)
