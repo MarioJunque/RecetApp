@@ -1,0 +1,22 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
+	<title>Recetas</title>
+	  <link href="/publico/css/fondo.css" rel="stylesheet">
+</head>
+<body style="height: 1800px">	
+	
+	<div class="boxlog" style="transform: translate(-50%,-1%);">
+		{{range .}}
+			<p style="color: #DAF7A6">ID: {{ .Id_ingrediente }}</p> 
+			<p style="color: white">Nombre: {{ .Nombre }}</p>   	
+		{{end}}
+		<form method="POST" action="/internal">
+	  	<input class="submitbutton" type="submit" name="volver" value="volver">
+		</form>
+	</div>	
+</body>
+</html>
