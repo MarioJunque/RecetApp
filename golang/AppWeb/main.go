@@ -10,8 +10,8 @@ import (
 
 func pantallaInicio(w http.ResponseWriter, r *http.Request) {
 
-	//fs := http.FileServer(http.Dir("publico"))
-	//http.Handle("/publico/", http.StripPrefix("/publico/", fs))
+	fs := http.FileServer(http.Dir("publico"))
+	http.Handle("/publico/", http.StripPrefix("/publico/", fs))
 	tmpl := template.Must(template.ParseFiles("publico/index.html"))
 	tmpl.Execute(w, nil)
 	r.ParseForm()
@@ -48,6 +48,14 @@ func ingredienteNoValido(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 }
 
+func pantallaInicioTrasLogout(w http.ResponseWriter, r *http.Request) {
+
+	tmpl := template.Must(template.ParseFiles("publico/index.html"))
+	tmpl.Execute(w, nil)
+	r.ParseForm()
+
+}
+
 func main() {
 
 	http.HandleFunc("/recetapp", pantallaInicio)
@@ -61,6 +69,7 @@ func main() {
 	http.HandleFunc("/recetas", funciones.MostrarMisRecetas)
 	http.HandleFunc("/recetasExistentes", funciones.MostrarReceta)
 	http.HandleFunc("/misIngredientes", funciones.MostrarMisIngredientes)
+	http.HandleFunc("/recetApp", pantallaInicioTrasLogout)
 	//    http.HandleFunc("/receta",funciones.Receta)
 
 	err := http.ListenAndServe(":8080", nil) // setting listening port
