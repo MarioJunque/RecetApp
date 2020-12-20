@@ -64,6 +64,14 @@ func usuarioNoValido(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func registroConExito(w http.ResponseWriter, r *http.Request) {
+
+	tmpl := template.Must(template.ParseFiles("publico/registroExitoso.html"))
+	tmpl.Execute(w, nil)
+	r.ParseForm()
+
+}
+
 func main() {
 
 	http.HandleFunc("/recetapp", pantallaInicio)
@@ -71,6 +79,7 @@ func main() {
 	http.HandleFunc("/usuarioInvalido", usuarioNoValido)
 	http.HandleFunc("/internal", internal)
 	http.HandleFunc("/registro", funciones.Registro)
+	http.HandleFunc("/registroExitoso", registroConExito)
 	http.HandleFunc("/AnnadirIngrediente", annadirIngrediente)
 	http.HandleFunc("/ingrediente", funciones.AnnadirIngredienteAMiLista)
 	http.HandleFunc("/ingredienteInvalido", ingredienteNoValido)

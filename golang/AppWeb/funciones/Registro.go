@@ -28,7 +28,7 @@ type Intolerancias struct {
 func Registro(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("method:", r.Method) //get request method
-	redirectTarget := "/recetApp"
+	redirectTarget := "/registroExitoso"
 	if r.Method == "GET" {
 		tmpl := template.Must(template.ParseFiles("publico/registro.html"))
 		tmpl.Execute(w, nil)
@@ -44,10 +44,10 @@ func Registro(w http.ResponseWriter, r *http.Request) {
 
 		if resultado == "RegistroOK" {
 
-			redirectTarget = "/recetApp"
+			redirectTarget = "/registroExitoso"
 		} else {
 			fmt.Println("Error en el registro")
-			redirectTarget = "/recetApp"
+			redirectTarget = "/registroExitoso"
 		}
 	}
 
