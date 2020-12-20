@@ -10,8 +10,8 @@ import (
 
 func pantallaInicio(w http.ResponseWriter, r *http.Request) {
 
-	fs := http.FileServer(http.Dir("publico"))
-	http.Handle("/publico/", http.StripPrefix("/publico/", fs))
+	//fs := http.FileServer(http.Dir("publico"))
+	//http.Handle("/publico/", http.StripPrefix("/publico/", fs))
 	tmpl := template.Must(template.ParseFiles("publico/index.html"))
 	tmpl.Execute(w, nil)
 	r.ParseForm()
@@ -57,7 +57,7 @@ func main() {
 	http.HandleFunc("/AnnadirIngrediente", annadirIngrediente)
 	http.HandleFunc("/ingrediente", funciones.AnnadirIngredienteAMiLista)
 	http.HandleFunc("/ingredienteInvalido", ingredienteNoValido)
-	http.HandleFunc("/logout", funciones.Login)
+	http.HandleFunc("/logout", funciones.Logout)
 	http.HandleFunc("/recetas", funciones.MostrarMisRecetas)
 	http.HandleFunc("/recetasExistentes", funciones.MostrarReceta)
 	//    http.HandleFunc("/receta",funciones.Receta)
