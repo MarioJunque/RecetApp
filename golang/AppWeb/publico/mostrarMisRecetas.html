@@ -9,8 +9,8 @@
 <body>
 	<div class="boxlog">
 		{{range .}}
-			<p>ID: {{ .Id_receta }}</p> 
-			<p>Nombre: {{ .Nombre_receta }}</p>   		
+			<p style="color: #DAF7A6">ID: {{ .Id_receta }}</p> 
+			<p style="color: white">Nombre: {{ .Nombre_receta }}</p>   		
 		{{end}}
 		<form method="POST" action="/internal">
 	  	<input class="submitbutton" type="submit" name="volver" value="volver">
