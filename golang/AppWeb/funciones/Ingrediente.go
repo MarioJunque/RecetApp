@@ -53,7 +53,8 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 			default:
 				panic(err)
 				}
-
+			} else { 
+				redirectTarget = "/ingredienteRepetido"
 			}
 		default:
 			panic(err)

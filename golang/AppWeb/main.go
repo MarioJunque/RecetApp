@@ -48,6 +48,14 @@ func ingredienteNoValido(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 }
 
+func ingredienteRepetido(w http.ResponseWriter, r *http.Request) {
+
+    tmpl := template.Must(template.ParseFiles("publico/ingredienteRepetido.html"))
+    tmpl.Execute(w, nil)
+
+    r.ParseForm()
+}
+
 func pantallaInicioTrasLogout(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.Must(template.ParseFiles("publico/index.html"))
@@ -83,6 +91,7 @@ func main() {
 	http.HandleFunc("/AnnadirIngrediente", annadirIngrediente)
 	http.HandleFunc("/ingrediente", funciones.AnnadirIngredienteAMiLista)
 	http.HandleFunc("/ingredienteInvalido", ingredienteNoValido)
+    http.HandleFunc("/ingredienteRepetido", ingredienteRepetido)
 	http.HandleFunc("/logout", funciones.Logout)
 	http.HandleFunc("/recetas", funciones.MostrarMisRecetas)
 	http.HandleFunc("/recetasExistentes", funciones.MostrarReceta)
