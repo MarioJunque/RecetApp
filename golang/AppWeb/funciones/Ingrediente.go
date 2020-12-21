@@ -32,7 +32,7 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 		ingrediente := Ingrediente{
 			Nombre: r.FormValue("ingrediente"),
 		}
-		
+
 		ingrediente.Id_ingrediente, err = ComprobarIngredienteBBDD(db, ingrediente.Nombre)
 
 		switch err {
@@ -40,20 +40,20 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("No está disponible este ingrediente en la base de datos")
 		case nil:
 			id_usuario := GetUserID(r)
-			tengoIngrediennte := ComprobarIngredienteUsuario(db,id_usuario,ingrediente.Id_ingrediente)
+			tengoIngrediennte := ComprobarIngredienteUsuario(db, id_usuario, ingrediente.Id_ingrediente)
 
 			if tengoIngrediennte == true {
-			id, err := Insert(db, ingrediente, id_usuario)
+				id, err := Insert(db, ingrediente, id_usuario)
 
-			switch err {
-			case sql.ErrNoRows:
-				log.Fatal(id, err)
-			case nil:
-				redirectTarget = "/internal"
-			default:
-				panic(err)
+				switch err {
+				case sql.ErrNoRows:
+					log.Fatal(id, err)
+				case nil:
+					redirectTarget = "/ingredienteAñadido"
+				default:
+					panic(err)
 				}
-			} else { 
+			} else {
 				redirectTarget = "/ingredienteRepetido"
 			}
 		default:
@@ -65,7 +65,6 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
-
 
 func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error) {
 
@@ -83,10 +82,10 @@ func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 	}
 }
 
-func ComprobarIngredienteUsuario(db *sql.DB, id_usuario int, id_ingrediente int) (bool) {
+func ComprobarIngredienteUsuario(db *sql.DB, id_usuario int, id_ingrediente int) bool {
 
 	var ingrediente Ingrediente
-	row := db.QueryRow("SELECT id_ingredientes FROM ingrediente_usuario WHERE id_usuarios = ? AND id_ingredientes = ?",id_usuario,id_ingrediente)
+	row := db.QueryRow("SELECT id_ingredientes FROM ingrediente_usuario WHERE id_usuarios = ? AND id_ingredientes = ?", id_usuario, id_ingrediente)
 	err = row.Scan(&ingrediente.Id_ingrediente)
 	switch err {
 	case sql.ErrNoRows:

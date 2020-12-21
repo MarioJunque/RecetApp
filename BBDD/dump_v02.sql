@@ -62,8 +62,8 @@ CREATE TABLE `ingrediente_usuario` (
   PRIMARY KEY (`id_ingrediente_usuario`),
   KEY `id_ingrediente` (`id_ingredientes`),
   KEY `id_usuario` (`id_usuarios`),
-  CONSTRAINT `c1` FOREIGN KEY (`id_ingredientes`) REFERENCES `ingredientes` (`id_ingrediente`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `c2` FOREIGN KEY (`id_usuarios`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `c1` FOREIGN KEY (`id_ingredientes`) REFERENCES `ingredientes` (`id_ingrediente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `c2` FOREIGN KEY (`id_usuarios`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
