@@ -18,21 +18,6 @@ type Receta struct {
 	NumeroIngredientes int
 }
 
-/*func Login(response http.ResponseWriter, request *http.Request) {
-
-	redirectTarget := "/recetapp"
-	if user.Nombre != "" && user.Password != "" {
-		// .. check credentials ..
-		Id_usuario, usuarioValido := ComprobarCredenciales(user)
-		ID_string := strconv.Itoa(Id_usuario)
-
-		if usuarioValido == true {
-			setSession(ID_string, response)
-			redirectTarget = "/internal"
-		}
-	}
-	http.Redirect(response, request, redirectTarget, 302)
-}*/
 
 func MostrarMisRecetas(w http.ResponseWriter, r *http.Request) {
 

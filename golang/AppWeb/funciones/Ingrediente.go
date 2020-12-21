@@ -32,7 +32,7 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 		ingrediente := Ingrediente{
 			Nombre: r.FormValue("ingrediente"),
 		}
-
+		
 		ingrediente.Id_ingrediente, err = ComprobarIngredienteBBDD(db, ingrediente.Nombre)
 
 		switch err {
@@ -40,6 +40,7 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("No está disponible este ingrediente en la base de datos")
 		case nil:
 			id_usuario := GetUserID(r)
+			ComprobarIngredienteUsuario(db, ingrediente.Nombre, id_usuario)
 			id, err := Insert(db, ingrediente, id_usuario)
 
 			switch err {
@@ -61,18 +62,27 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 
 }
 
-//func BuscarIngrediente(id_usuario int) {
 
 func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error) {
 
 	var ingrediente Ingrediente
-	/*	stmt := "SELECT id_ingrediente FROM ingredientes WHERE nombre = ?"
-		fmt.Println(nombreIngrediente)
-		fmt.Println(stmt)
-		row := db.QueryRow(stmt,nombreIngrediente)
-		fmt.Println(row)
-		err := row.Scan(&ingrediente.Id_ingrediente)*/
 	row := db.QueryRow("SELECT id_ingrediente FROM ingredientes WHERE nombre = ?", nombreIngrediente)
+	err = row.Scan(&ingrediente.Id_ingrediente)
+	switch err {
+	case sql.ErrNoRows:
+		fmt.Println("No está disponible este ingrediente en la base de datos")
+		return -1, err
+	case nil:
+		return ingrediente.Id_ingrediente, err
+	default:
+		panic(err)
+	}
+}
+
+func ComprobarIngredienteUsuario(db *sql.DB, nombreIngrediente string) (boolean, error) {
+
+	var ingrediente Ingrediente
+	row := db.QueryRow("SELECT id_ingredientes FROM ingredientes WHERE nombre = ?", nombreIngrediente)
 	err = row.Scan(&ingrediente.Id_ingrediente)
 	switch err {
 	case sql.ErrNoRows:
@@ -171,9 +181,4 @@ func BorrarIngrediente(db *sql.DB, id_ingrediente int, id_usuario int) {
 		log.Fatal(err)
 	}
 
-}
-
-func ComprobarIngrediente(db *sql.DB, id_ingrediente int, nombreIngrediente string) int {
-
-	return 1
 }
