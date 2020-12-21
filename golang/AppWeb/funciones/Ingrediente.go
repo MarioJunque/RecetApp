@@ -40,7 +40,7 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("No está disponible este ingrediente en la base de datos")
 		case nil:
 			id_usuario := GetUserID(r)
-			tengoIngrediennte := ComprobarIngredienteUsuario(db,id_usuario)
+			tengoIngrediennte := ComprobarIngredienteUsuario(db,id_usuario,ingrediente.Id_ingrediente)
 
 			if tengoIngrediennte == true {
 			id, err := Insert(db, ingrediente, id_usuario)
@@ -83,10 +83,10 @@ func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 	}
 }
 
-func ComprobarIngredienteUsuario(db *sql.DB, id_usuario int) (bool) {
+func ComprobarIngredienteUsuario(db *sql.DB, id_usuario int, id_ingrediente int) (bool) {
 
 	var ingrediente Ingrediente
-	row := db.QueryRow("SELECT id_ingredientes FROM ingrediente_usuario WHERE id_usuarios = ?",id_usuario)
+	row := db.QueryRow("SELECT id_ingredientes FROM ingrediente_usuario WHERE id_usuarios = ? AND id_ingredientes = ?",id_usuario,id_ingrediente)
 	err = row.Scan(&ingrediente.Id_ingrediente)
 	switch err {
 	case sql.ErrNoRows:
