@@ -88,6 +88,30 @@ func ingredienteAñadidoConExito(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func borrarIngrediente(w http.ResponseWriter, r *http.Request) {
+
+	tmpl := template.Must(template.ParseFiles("publico/borrarIngrediente.html"))
+	tmpl.Execute(w, nil)
+	r.ParseForm()
+
+}
+
+func ingredienteBorrado(w http.ResponseWriter, r *http.Request) {
+
+	tmpl := template.Must(template.ParseFiles("publico/ingredienteBorrado.html"))
+	tmpl.Execute(w, nil)
+	r.ParseForm()
+
+}
+
+func noTienesIngrediente(w http.ResponseWriter, r *http.Request) {
+
+	tmpl := template.Must(template.ParseFiles("publico/noIngrediente.html"))
+	tmpl.Execute(w, nil)
+	r.ParseForm()
+
+}
+
 func main() {
 
 	http.HandleFunc("/recetapp", pantallaInicio)
@@ -106,6 +130,10 @@ func main() {
 	http.HandleFunc("/misIngredientes", funciones.MostrarMisIngredientes)
 	http.HandleFunc("/recetApp", pantallaInicioTrasLogout)
 	http.HandleFunc("/ingredienteAñadido", ingredienteAñadidoConExito)
+	http.HandleFunc("/borrarIngrediente", borrarIngrediente)
+	http.HandleFunc("/ingredienteBorrado", funciones.BorrarIngrediente)
+	http.HandleFunc("/ingredienteBorradoConExito", ingredienteBorrado)
+	http.HandleFunc("/noIngrediente", noTienesIngrediente)
 	//    http.HandleFunc("/receta",funciones.Receta)
 
 	err := http.ListenAndServe(":8080", nil) // setting listening port

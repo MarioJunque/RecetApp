@@ -171,7 +171,7 @@ func MostrarMisIngredientes(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func BorrarIngrediente(db *sql.DB, id_ingrediente int, id_usuario int) {
+/*func BorrarIngrediente(db *sql.DB, id_ingrediente int, id_usuario int) {
 
 	stmt, err := db.Prepare("DELETE FROM ingrediente_usuario WHERE id_ingredientes = ? AND id_usuarios = ?")
 	if err != nil {
@@ -182,6 +182,74 @@ func BorrarIngrediente(db *sql.DB, id_ingrediente int, id_usuario int) {
 	_, err = stmt.Exec(id_ingrediente, id_usuario)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+}*/
+
+func Delete(db *sql.DB, ingrediente Ingrediente, id_usuario int) (int64, error) {
+
+	fmt.Println(id_usuario)
+	stmt, err := db.Prepare("DELETE FROM ingrediente_usuario WHERE id_ingredientes = ? AND id_usuarios = ?")
+	if err != nil {
+		return -1, err
+	}
+	defer stmt.Close()
+
+	res, err := stmt.Exec(ingrediente.Id_ingrediente, id_usuario)
+	if err != nil {
+		return -1, err
+	}
+
+	return res.LastInsertId()
+}
+
+func BorrarIngrediente(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == "GET" {
+		tmpl := template.Must(template.ParseFiles("publico/borrarIngrediente.html"))
+		tmpl.Execute(w, nil)
+	} else {
+
+		db, err := sql.Open("mysql", "root:root@/recetapp")
+		if err != nil {
+			log.Fatal("Cannot open DB connection", err)
+		}
+		defer db.Close()
+
+		redirectTarget := "/ingredienteInvalido"
+		ingrediente := Ingrediente{
+			Nombre: r.FormValue("ingrediente"),
+		}
+
+		ingrediente.Id_ingrediente, err = ComprobarIngredienteBBDD(db, ingrediente.Nombre)
+
+		switch err {
+		case sql.ErrNoRows:
+			fmt.Println("No está disponible este ingrediente en la base de datos")
+		case nil:
+			id_usuario := GetUserID(r)
+			tengoIngrediennte := ComprobarIngredienteUsuario(db, id_usuario, ingrediente.Id_ingrediente)
+
+			if tengoIngrediennte == false {
+				id, err := Delete(db, ingrediente, id_usuario)
+
+				switch err {
+				case sql.ErrNoRows:
+					log.Fatal(id, err)
+				case nil:
+					redirectTarget = "/ingredienteBorradoConExito"
+				default:
+					panic(err)
+				}
+			} else {
+				redirectTarget = "/noIngrediente"
+			}
+		default:
+			panic(err)
+		}
+
+		http.Redirect(w, r, redirectTarget, 302)
+
 	}
 
 }
