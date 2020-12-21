@@ -49,7 +49,7 @@ func IngredientesUsuarioReceta(db *sql.DB, id_usuario int) ([]Receta, error) {
 	var receta Receta
 	var ingredientesUsuario []Receta
 
-	stmt := "select id_receta, nombre_receta, count(ingrediente_receta.id_ingredientes) from recetas left outer join ingrediente_receta on recetas.id_receta = ingrediente_receta.id_recetas join ingrediente_usuario on ingrediente_receta.id_ingredientes = ingrediente_usuario.id_ingredientes and ingrediente_usuario.id_usuarios = ? group by recetas.id_receta;"
+	stmt := "select id_receta, nombre_receta, instrucciones, count(ingrediente_receta.id_ingredientes) from recetas left outer join ingrediente_receta on recetas.id_receta = ingrediente_receta.id_recetas join ingrediente_usuario on ingrediente_receta.id_ingredientes = ingrediente_usuario.id_ingredientes and ingrediente_usuario.id_usuarios = ? group by recetas.id_receta;"
 
 	rows, err := db.Query(stmt, id_usuario)
 
@@ -59,7 +59,7 @@ func IngredientesUsuarioReceta(db *sql.DB, id_usuario int) ([]Receta, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err := rows.Scan(&receta.Id_receta, &receta.Nombre_receta, &receta.NumeroIngredientes)
+		err := rows.Scan(&receta.Id_receta, &receta.Nombre_receta, &receta.Instrucciones, &receta.NumeroIngredientes)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -79,7 +79,7 @@ func NumeroIngredientesReceta(db *sql.DB) ([]Receta, error) {
 	var receta Receta
 	var ingredientesReceta []Receta
 
-	stmt := "select id_receta, nombre_receta, count(id_ingredientes) from recetas left outer join ingrediente_receta on recetas.id_receta = ingrediente_receta.id_recetas group by id_receta;"
+	stmt := "select id_receta, nombre_receta, instrucciones, count(id_ingredientes) from recetas left outer join ingrediente_receta on recetas.id_receta = ingrediente_receta.id_recetas group by id_receta;"
 
 	rows, err := db.Query(stmt)
 
@@ -89,7 +89,7 @@ func NumeroIngredientesReceta(db *sql.DB) ([]Receta, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		err := rows.Scan(&receta.Id_receta, &receta.Nombre_receta, &receta.NumeroIngredientes)
+		err := rows.Scan(&receta.Id_receta, &receta.Nombre_receta, &receta.Instrucciones, &receta.NumeroIngredientes)
 		if err != nil {
 			log.Fatal(err)
 		}
