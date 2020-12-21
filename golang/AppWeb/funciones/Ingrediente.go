@@ -40,7 +40,9 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("No está disponible este ingrediente en la base de datos")
 		case nil:
 			id_usuario := GetUserID(r)
-			ComprobarIngredienteUsuario(db, ingrediente.Nombre, id_usuario)
+			tengoIngrediennte := ComprobarIngredienteUsuario(db,id_usuario,ingrediente.Nombre)
+
+			if tengoIngrediennte == false {
 			id, err := Insert(db, ingrediente, id_usuario)
 
 			switch err {
@@ -50,8 +52,9 @@ func AnnadirIngredienteAMiLista(w http.ResponseWriter, r *http.Request) {
 				redirectTarget = "/internal"
 			default:
 				panic(err)
-			}
+				}
 
+			}
 		default:
 			panic(err)
 		}
@@ -79,17 +82,17 @@ func ComprobarIngredienteBBDD(db *sql.DB, nombreIngrediente string) (int, error)
 	}
 }
 
-func ComprobarIngredienteUsuario(db *sql.DB, nombreIngrediente string) (boolean, error) {
+func ComprobarIngredienteUsuario(db *sql.DB, id_usuario int, nombreIngrediente string) (bool) {
 
 	var ingrediente Ingrediente
-	row := db.QueryRow("SELECT id_ingredientes FROM ingredientes WHERE nombre = ?", nombreIngrediente)
+	row := db.QueryRow("SELECT id_ingredientes FROM ingredientes WHERE nombre = ? AND nombre = ?",id_usuario,nombreIngrediente)
 	err = row.Scan(&ingrediente.Id_ingrediente)
 	switch err {
 	case sql.ErrNoRows:
 		fmt.Println("No está disponible este ingrediente en la base de datos")
-		return -1, err
+		return true
 	case nil:
-		return ingrediente.Id_ingrediente, err
+		return false
 	default:
 		panic(err)
 	}
