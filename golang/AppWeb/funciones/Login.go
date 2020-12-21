@@ -9,10 +9,7 @@ import (
 
 	//	"github.com/gorilla/mux"
 	"log"
-
 	"github.com/gorilla/securecookie"
-
-	//	"html/template"
 	"net/http"
 	"strconv"
 )
@@ -31,15 +28,6 @@ var cookieHandler = securecookie.New(
 	securecookie.GenerateRandomKey(64),
 	securecookie.GenerateRandomKey(32))
 
-/*func GetUserName(request *http.Request) (userName string) {
-    if cookie, err := request.Cookie("session"); err == nil {
-        cookieValue := make(map[string]string)
-        if err = cookieHandler.Decode("session", cookie.Value, &cookieValue); err == nil {
-            userName = cookieValue["name"]
-        }
-    }
-    return userName
-}*/
 
 func GetUserID(request *http.Request) (userID int) {
 	if cookie, err := request.Cookie("session"); err == nil {
@@ -52,19 +40,6 @@ func GetUserID(request *http.Request) (userID int) {
 	return userID
 }
 
-/*func setSession(userName string, response http.ResponseWriter) {
-    value := map[string]string{
-        "Nombre": userName,
-    }
-    if encoded, err := cookieHandler.Encode("session", value); err == nil {
-        cookie := &http.Cookie{
-            Name:  "session",
-            Value: encoded,
-            Path:  "/",
-        }
-        http.SetCookie(response, cookie)
-    }
-}*/
 
 func setSession(userID string, response http.ResponseWriter) {
 	value := map[string]string{
@@ -111,49 +86,15 @@ func Login(response http.ResponseWriter, request *http.Request) {
 	http.Redirect(response, request, redirectTarget, 302)
 }
 
-func Logout(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("publico/logout.html"))
-	tmpl.Execute(w, nil)
 
-	r.ParseForm()
+func Logout(response http.ResponseWriter, request *http.Request) {
 
-}
-
-/*func Logout(response http.ResponseWriter, request *http.Request) {
-	redirectTarget := "/recetapp"
 	clearSession(response)
-	http.Redirect(response, request, redirectTarget, 302)
-}*/
+	tmpl := template.Must(template.ParseFiles("publico/logout.html"))
+    tmpl.Execute(response, nil)
 
-/*func Login(w http.ResponseWriter, r *http.Request) {
-
-        fmt.Println("method:", r.Method) //get request method
-    if r.Method == "GET" {
-        t, _ := template.ParseFiles("index.html")
-        t.Execute(w, nil)
-    } else {
-
-//        user := funciones.Usuario {
-		user:= Usuario {
-            Nombre:   r.FormValue("nombre"),
-            Password: r.FormValue("password"),
-        }
-
-        usuarioValido := ComprobarCredenciales(user)
-//        usuarioValido := funciones.ComprobarCredenciales(user)
-        fmt.Println(usuarioValido)
-
-        if usuarioValido == true {
-
-            redirectTarget := "/internal"
-            http.Redirect(w, r, redirectTarget, 302)
-        } else {
-        	t, _ := template.ParseFiles("index.html")
-        	t.Execute(w, nil)
-        }
-        }
-
-    }*/
+    request.ParseForm()
+}
 
 func Autenticar(db *sql.DB, nombre string) (string, int, error) {
 
